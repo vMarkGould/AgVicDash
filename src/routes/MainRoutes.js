@@ -16,6 +16,7 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+const ChartPlotly = Loadable(lazy(() => import('views/chart-plotly')));
 
 // ===========================|| MAIN ROUTING ||=========================== //
 
@@ -30,6 +31,10 @@ const MainRoutes = {
         {
             path: '/dashboard/default',
             element: <DashboardDefault />
+        },
+        {
+            path: '/chart-plotly',
+            element: <ChartPlotly />
         },
         {
             path: '/utils/util-typography',
