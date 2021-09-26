@@ -7,8 +7,8 @@ import { Grid, MenuItem, TextField, Typography, useTheme } from '@material-ui/co
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from 'ui-component/cards/MainCard';
-import { gridSpacing } from 'store/constant';
 import PropTypes from 'prop-types';
+import { gridSpacing } from 'store/constant';
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -31,12 +31,12 @@ const status = [
 const PlotlyChart = ({ isLoading }) => {
     const [value, setValue] = React.useState('Ten');
     const theme = useTheme();
-    const { primary } = theme.palette.text;
+    // const { primary } = theme.palette.text;
     const grey200 = theme.palette.grey[200];
-    const primary200 = theme.palette.primary[200];
-    const primaryDark = theme.palette.primary.dark;
-    const secondaryMain = theme.palette.secondary.main;
-    const secondaryLight = theme.palette.secondary.light;
+    // const primary200 = theme.palette.primary[200];
+    // const primaryDark = theme.palette.primary.dark;
+    // const secondaryMain = theme.palette.secondary.main;
+    // const secondaryLight = theme.palette.secondary.light;
     const grey500 = theme.palette.grey[500];
     const trace1 = {
         x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],

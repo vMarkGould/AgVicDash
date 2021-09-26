@@ -21,16 +21,12 @@ const ChartPlotly = () => {
     return (
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <MainCard title="Plotly chart">
-                            <Typography variant="body2">Test</Typography>
-                        </MainCard>
-                    </Grid>
-                    <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <PlotlyChart isLoading={isLoading} />
-                    </Grid>
-                </Grid>
+                <MainCard title="Soil Moisture">
+                    <Typography variant="body2">Information about Soil Moisture ROI</Typography>
+                </MainCard>
+            </Grid>
+            <Grid item xs={12}>
+                <PlotlyChart isLoading={isLoading} />
             </Grid>
         </Grid>
     );

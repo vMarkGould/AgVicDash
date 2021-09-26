@@ -11,12 +11,12 @@ const icons = {
 
 const chart = {
     id: 'chart',
-    title: 'Plotly Chart',
+    title: 'Return On Investment',
     type: 'group',
     children: [
         {
             id: 'plotlychart',
-            title: 'Plotly Chart',
+            title: 'Soil Moisture',
             type: 'item',
             url: '/chart-plotly',
             icon: icons.IconDeviceAnalytics,
