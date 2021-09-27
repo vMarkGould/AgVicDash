@@ -10,6 +10,8 @@ import PlotlyChart from './plotlychart';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 
+import SliderCard from './slidercard';
+
 //= =============================|| SAMPLE PAGE ||==============================//
 
 const ChartPlotly = () => {
@@ -24,6 +26,9 @@ const ChartPlotly = () => {
                 <MainCard title="Soil Moisture">
                     <Typography variant="body2">Information about Soil Moisture ROI</Typography>
                 </MainCard>
+            </Grid>
+            <Grid item xs={3}>
+                <SliderCard isLoading={isLoading} />
             </Grid>
             <Grid item xs={12}>
                 <PlotlyChart isLoading={isLoading} />

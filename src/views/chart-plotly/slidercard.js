@@ -3,7 +3,7 @@ import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography, Slider, Grid } from '@material-ui/core';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -62,9 +62,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function valuetext(value) {
+    return `${value}Ha`;
+}
 // ===========================|| DASHBOARD - TOTAL INCOME DARK CARD ||=========================== //
 
-const TotalIncomeDarkCard = ({ isLoading }) => {
+const SliderCard = ({ isLoading }) => {
     const classes = useStyles();
 
     return (
@@ -73,40 +76,42 @@ const TotalIncomeDarkCard = ({ isLoading }) => {
                 <TotalIncomeCard />
             ) : (
                 <MainCard border={false} className={classes.card} contentClass={classes.content}>
-                    <List className={classes.padding}>
-                        <ListItem alignItems="center" disableGutters className={classes.padding}>
-                            <ListItemAvatar>
-                                <Avatar variant="rounded" className={classes.avatar}>
-                                    <TableChartOutlinedIcon fontSize="inherit" />
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                className={classes.padding}
-                                sx={{
-                                    mt: 0.45,
-                                    mb: 0.45
-                                }}
-                                primary={
-                                    <Typography variant="h4" className={classes.secondary}>
-                                        $203k
+                    <Grid container>
+                        <Grid xs={12}>
+                            <Grid container>
+                                <Grid xs={6}>
+                                    <Typography variant="h4" align="left" className={classes.secondary}>
+                                        Value Ha
                                     </Typography>
-                                }
-                                secondary={
-                                    <Typography variant="subtitle2" className={classes.secondary}>
-                                        Total Income
+                                </Grid>
+                                <Grid xs={6}>
+                                    <Typography variant="subtitle1" className={classes.secondary}>
+                                        Hectares
                                     </Typography>
-                                }
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid xs={12}>
+                            <Slider
+                                aria-label="Small steps"
+                                defaultValue={1000}
+                                getAriaValueText={valuetext}
+                                step={100}
+                                marks
+                                min={100}
+                                max={10000}
+                                valueLabelDisplay="auto"
                             />
-                        </ListItem>
-                    </List>
+                        </Grid>
+                    </Grid>
                 </MainCard>
             )}
         </>
     );
 };
 
-TotalIncomeDarkCard.propTypes = {
+SliderCard.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default TotalIncomeDarkCard;
+export default SliderCard;
