@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Plotly from 'plotly.js-basic-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
@@ -28,8 +28,19 @@ const status = [
 ];
 
 // eslint-disable-next-line react/prefer-stateless-function
-const PlotlyChart = ({ isLoading }) => {
+const PlotlyChart = ({ isLoading, areaValue }) => {
     const [value, setValue] = React.useState('Ten');
+    const xValuesline = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const xValuesArea = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+    const [yValuesArea, setyValuesArea] = useState([]);
+    const [yValuesLine, setyValuesLine] = useState([]);
+    // const [trace1datax, setTrace1datax] = useState([]);
+    // const [i, seti] = useState(0);
+    useEffect(() => {
+        setyValuesArea([2, 3, 4, 5, 6, 7, 8, 9, 10, 11 + areaValue / 1000, 9 + areaValue / 1000, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
+        setyValuesLine([1, 2, 3, 4, 5, 6, 7, 8, 9, 10 + areaValue / 1000]);
+    }, [areaValue]);
+
     const theme = useTheme();
     // const { primary } = theme.palette.text;
     const grey200 = theme.palette.grey[200];
@@ -40,7 +51,7 @@ const PlotlyChart = ({ isLoading }) => {
     const grey500 = theme.palette.grey[500];
     const trace1 = {
         x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
-        y: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+        y: yValuesArea,
         fill: 'tozerox',
         legendgroup: 'group1',
         fillcolor: 'rgba(0,100,80,0.2)',
@@ -64,7 +75,7 @@ const PlotlyChart = ({ isLoading }) => {
 
     const trace4 = {
         x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        y: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        y: yValuesLine,
         line: { color: 'rgb(0,100,80)' },
         mode: 'lines',
         name: 'Fair',
@@ -126,7 +137,9 @@ const PlotlyChart = ({ isLoading }) => {
                                 <Grid item>
                                     <Grid container direction="column" spacing={1}>
                                         <Grid item>
-                                            <Typography variant="subtitle2">{value} Year Return on Investment</Typography>
+                                            <Typography variant="subtitle2">
+                                                {value} Year Return on Investment - an area size of: {areaValue}Ha
+                                            </Typography>
                                         </Grid>
                                         <Grid item>
                                             <Typography variant="h3">$2,324.00</Typography>
@@ -152,7 +165,7 @@ const PlotlyChart = ({ isLoading }) => {
                         <Grid item xs={12}>
                             <div ref={ref} style={{ display: 'flex', height: '100%' }}>
                                 <Plot
-                                    data={[trace1, trace2, trace4, trace5]}
+                                    data={[trace1, trace4]}
                                     useResizeHandler
                                     layout={chartLayout}
                                     style={{ width: '100%', height: '100%' }}
