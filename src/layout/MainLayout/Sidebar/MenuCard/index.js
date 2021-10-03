@@ -63,11 +63,11 @@ const UpgradePlanCard = () => {
             <CardContent>
                 <Grid container direction="column" spacing={2}>
                     <Grid item>
-                        <Typography variant="h4">Upgrade to Pro</Typography>
+                        <Typography variant="h4">AgVic Soil Moisture Monitoring</Typography>
                     </Grid>
                     <Grid item>
                         <Typography variant="subtitle2" className={classes.tagLine}>
-                            For more premium pages & features
+                            Find out about Soil Moisture near you
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -75,12 +75,12 @@ const UpgradePlanCard = () => {
                             <AnimateButton>
                                 <Button
                                     component={Link}
-                                    href="https://berrydashboard.io/"
+                                    href="https://extensionaus.com.au/soilmoisturemonitoring/"
                                     target="_blank"
                                     variant="contained"
                                     className={classes.button}
                                 >
-                                    Go Premium
+                                    Soil Moisture sites
                                 </Button>
                             </AnimateButton>
                         </Stack>

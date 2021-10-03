@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
@@ -15,8 +15,8 @@ import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
 // style constant
 const useStyles = makeStyles((theme) => ({
     card: {
-        backgroundColor: theme.palette.primary.dark,
-        color: theme.palette.primary.light,
+        backgroundColor: theme.palette.primary[200],
+        // color: theme.palette.primary.light,
         overflow: 'hidden',
         position: 'relative',
         '&:after': {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
             position: 'absolute',
             width: '210px',
             height: '210px',
-            background: `linear-gradient(210.04deg, ${theme.palette.primary[200]} -50.94%, rgba(144, 202, 249, 0) 83.49%)`,
+            // background: `linear-gradient(210.04deg, ${theme.palette.primary[200]} -50.94%, rgba(144, 202, 249, 0) 83.49%)`,
             borderRadius: '50%',
             top: '-30px',
             right: '-180px'
@@ -34,10 +34,15 @@ const useStyles = makeStyles((theme) => ({
             position: 'absolute',
             width: '210px',
             height: '210px',
-            background: `linear-gradient(140.9deg, ${theme.palette.primary[200]} -14.02%, rgba(144, 202, 249, 0) 77.58%)`,
+            // background: `linear-gradient(140.9deg, ${theme.palette.primary[200]} -14.02%, rgba(144, 202, 249, 0) 77.58%)`,
             borderRadius: '50%',
             top: '-160px',
             right: '-130px'
+        }
+    },
+    slider: {
+        thumb: {
+            background: '#fff'
         }
     },
     content: {
@@ -46,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         ...theme.typography.commonAvatar,
         ...theme.typography.largeAvatar,
-        backgroundColor: theme.palette.primary[800],
+        backgroundColor: theme.palette.primary[200],
         color: '#fff'
     },
     primary: {
@@ -62,13 +67,36 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const useSliderStyles = makeStyles((theme) => ({
+    thumb: {
+        backgroundColor: theme.palette.secondary.main
+    },
+    active: {
+        background: theme.palette.secondary.light,
+        color: theme.palette.secondary.light
+    },
+    track: {
+        color: theme.palette.secondary.main,
+        backgroundColor: theme.palette.secondary.main
+    },
+    rail: {
+        color: theme.palette.secondary.main,
+        background: theme.palette.secondary.main
+    }
+}));
 function valuetext(value) {
     return `${value}Ha`;
 }
 // ===========================|| DASHBOARD - TOTAL INCOME DARK CARD ||=========================== //
 
-const SliderCard = ({ isLoading }) => {
+const SliderCard = ({ isLoading, setSlidervalue, sliderValue }) => {
     const classes = useStyles();
+    const sliderClass = useSliderStyles();
+    // const [slidervalue, setsliderValue] = useState(1000);
+    console.log(sliderClass);
+    const onChange = (e, value) => {
+        setSlidervalue(value);
+    };
 
     return (
         <>
@@ -80,27 +108,29 @@ const SliderCard = ({ isLoading }) => {
                         <Grid xs={12}>
                             <Grid container>
                                 <Grid xs={6}>
-                                    <Typography variant="h4" align="left" className={classes.secondary}>
-                                        Value Ha
+                                    <Typography variant="subtitle1" align="left" className={classes.secondary}>
+                                        {sliderValue} Ha
                                     </Typography>
                                 </Grid>
                                 <Grid xs={6}>
                                     <Typography variant="subtitle1" className={classes.secondary}>
-                                        Hectares
+                                        Property Size
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Grid xs={12}>
                             <Slider
-                                aria-label="Small steps"
-                                defaultValue={1000}
+                                color="secondary"
+                                aria-label="Property Size"
+                                value={sliderValue}
                                 getAriaValueText={valuetext}
                                 step={100}
                                 marks
                                 min={100}
                                 max={10000}
                                 valueLabelDisplay="auto"
+                                onChange={onChange}
                             />
                         </Grid>
                     </Grid>
