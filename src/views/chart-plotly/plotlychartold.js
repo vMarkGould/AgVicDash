@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Plotly from 'plotly.js-basic-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
@@ -28,19 +28,10 @@ const status = [
 ];
 
 // eslint-disable-next-line react/prefer-stateless-function
-const PlotlyChart = ({ isLoading, areaValue }) => {
+const PlotlyChart = ({ isLoading, sliderValue }) => {
     const [value, setValue] = React.useState('Ten');
-    const xValuesline = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const xValuesArea = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-    const [yValuesArea, setyValuesArea] = useState([]);
-    const [yValuesLine, setyValuesLine] = useState([]);
     // const [trace1datax, setTrace1datax] = useState([]);
     // const [i, seti] = useState(0);
-    useEffect(() => {
-        setyValuesArea([2, 3, 4, 5, 6, 7, 8, 9, 10, 11 + areaValue / 1000, 9 + areaValue / 1000, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
-        setyValuesLine([1, 2, 3, 4, 5, 6, 7, 8, 9, 10 + areaValue / 1000]);
-    }, [areaValue]);
-
     const theme = useTheme();
     // const { primary } = theme.palette.text;
     const grey200 = theme.palette.grey[200];
@@ -50,8 +41,8 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
     // const secondaryLight = theme.palette.secondary.light;
     const grey500 = theme.palette.grey[500];
     const trace1 = {
-        x: xValuesArea,
-        y: yValuesArea,
+        x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
+        y: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
         fill: 'tozerox',
         legendgroup: 'group1',
         fillcolor: 'rgba(0,100,80,0.2)',
@@ -62,7 +53,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
     };
 
     const trace2 = {
-        x: xValuesArea,
+        x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
         y: [5.5, 3, 5.5, 8, 6, 3, 8, 5, 6, 5.5, 4.75, 5, 4, 7, 2, 4, 7, 4.4, 2, 4.5],
         fill: 'tozerox',
         fillcolor: 'rgba(0,176,246,0.2)',
@@ -74,8 +65,8 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
     };
 
     const trace4 = {
-        x: xValuesline,
-        y: yValuesLine,
+        x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        y: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         line: { color: 'rgb(0,100,80)' },
         mode: 'lines',
         name: 'Fair',
@@ -84,7 +75,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
     };
 
     const trace5 = {
-        x: xValuesline,
+        x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         y: [5, 2.5, 5, 7.5, 5, 2.5, 7.5, 4.5, 5.5, 5],
         line: { color: 'rgb(0,176,246)' },
         mode: 'lines',
@@ -124,9 +115,6 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
         // refreshMode: 'debounce',
         // refreshRate: 1000
     });
-    PlotlyChart.propTypes = {
-        areaValue: PropTypes.number
-    };
 
     return (
         <div>
@@ -141,7 +129,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
                                     <Grid container direction="column" spacing={1}>
                                         <Grid item>
                                             <Typography variant="subtitle2">
-                                                {value} Year Return on Investment - an area size of: {areaValue}Ha
+                                                {value} Year Return on Investment - property size: {sliderValue}
                                             </Typography>
                                         </Grid>
                                         <Grid item>
@@ -168,7 +156,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
                         <Grid item xs={12}>
                             <div ref={ref} style={{ display: 'flex', height: '100%' }}>
                                 <Plot
-                                    data={[trace1, trace4]}
+                                    data={[trace1, trace2, trace4, trace5]}
                                     useResizeHandler
                                     layout={chartLayout}
                                     style={{ width: '100%', height: '100%' }}

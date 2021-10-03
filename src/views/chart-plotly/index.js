@@ -10,7 +10,7 @@ import PlotlyChart from './plotlychart';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 
-import SliderCard from './slidercard';
+import SliderCard from 'ui-component/cards/Skeleton/sliderCard';
 
 //= =============================|| SAMPLE PAGE ||==============================//
 

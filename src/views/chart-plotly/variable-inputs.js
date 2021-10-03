@@ -85,11 +85,11 @@ const useSliderStyles = makeStyles((theme) => ({
     }
 }));
 function valuetext(value) {
-    return `${value}`;
+    return `${value}Ha`;
 }
-// ===========================|| DASHBOARD - Slider ||=========================== //
+// ===========================|| DASHBOARD - TOTAL INCOME DARK CARD ||=========================== //
 
-const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step, min, max }) => {
+const SliderCard = ({ isLoading, setSlidervalue, sliderValue }) => {
     const classes = useStyles();
     const sliderClass = useSliderStyles();
     // const [slidervalue, setsliderValue] = useState(1000);
@@ -109,12 +109,12 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
                             <Grid container>
                                 <Grid xs={6}>
                                     <Typography variant="subtitle1" align="left" className={classes.secondary}>
-                                        {unit} {sliderValue}
+                                        {sliderValue} Ha
                                     </Typography>
                                 </Grid>
                                 <Grid xs={6}>
                                     <Typography variant="subtitle1" className={classes.secondary}>
-                                        {label}
+                                        Property Size
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -122,13 +122,13 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
                         <Grid xs={12}>
                             <Slider
                                 color="secondary"
-                                aria-label={label}
+                                aria-label="Property Size"
                                 value={sliderValue}
                                 getAriaValueText={valuetext}
-                                step={step}
+                                step={100}
                                 marks
-                                min={min}
-                                max={max}
+                                min={100}
+                                max={10000}
                                 valueLabelDisplay="auto"
                                 onChange={onChange}
                             />
