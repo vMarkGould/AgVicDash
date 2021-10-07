@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import { Typography, Slider, Grid } from '@material-ui/core';
+import { Typography, Selector, Grid } from '@material-ui/core';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
             right: '-130px'
         }
     },
-    slider: {
+    selector: {
         thumb: {
             background: '#fff'
         }
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const useSliderStyles = makeStyles((theme) => ({
+const useSelectorStyles = makeStyles((theme) => ({
     thumb: {
         backgroundColor: theme.palette.secondary.main
     },
@@ -80,16 +80,22 @@ function valuetext(value) {
 }
 // ===========================|| DASHBOARD - Slider ||=========================== //
 
-const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step, min, max }) => {
+const SelectorCard = ({ isLoading }) => {
     const classes = useStyles();
-    const sliderClass = useSliderStyles();
-    // const [slidervalue, setsliderValue] = useState(1000);
-    console.log(sliderClass);
-    const onChange = (e, value) => {
-        setSlidervalue(value);
-    };
+    const selectorClass = useSelectorStyles();
+    const [selectorValue, setSelectorvalue] = useState('');
+    console.log(selectorClass);
+    
+const updateFieldChanged = index => e => {
+  console.log('index: ' + index);
+  console.log('property name: '+ e.target.name);
+  let newArr = [...datas]; // copying the old datas array
+  newArr[index] = e.target.value; // replace e.target.value with whatever you want to change it to
 
-    SliderCard.propTypes = {
+  setDatas(newArr); // ??
+}
+
+    SelectorCard.propTypes = {
         setSlidervalue: PropTypes.func,
         sliderValue: PropTypes.number,
         unit: PropTypes.string,
@@ -106,33 +112,39 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
             ) : (
                 <MainCard border={false} className={classes.card} contentClass={classes.content}>
                     <Grid container>
-                        <Grid item xs={12}>
+                        <Grid xs={12}>
                             <Grid container>
-                                <Grid item xs={6}>
-                                    <Typography variant="subtitle1" align="left" className={classes.secondary}>
-                                        {unit} {sliderValue}
-                                    </Typography>
-                                </Grid>
                                 <Grid xs={6}>
-                                    <Typography variant="subtitle1" className={classes.secondary}>
-                                        {label}
+                                    <Typography variant="subtitle1" align="left" className={classes.secondary}>
+                                        Yearly Seasonal outlook
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Slider
-                                color="secondary"
-                                aria-label={label}
-                                value={sliderValue}
-                                getAriaValueText={valuetext}
-                                step={step}
-                                marks
-                                min={min}
-                                max={max}
-                                valueLabelDisplay="auto"
-                                onChange={onChange}
-                            />
+                        <Grid container>
+                            {years.map((data, index) => {
+                                <React.Fragment key={data.index}>
+                                    <Grid xs={12}>
+                                        <FormControl fullWidth>
+                                            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                                                Year1
+                                            </InputLabel>
+                                            <NativeSelect
+                                                onChange={updateFieldChanged(index)}
+                                                defaultValue={'avg'}
+                                                inputProps={{
+                                                name: 'year1',
+                                                id: 'uncontrolled-native',
+                                            }}
+                                            >
+                                                <option value={'avg'}>avg</option>
+                                                <option value={'wet'}>wet</option>
+                                                <option value={'dry'}>dry</option>
+                                            </NativeSelect>
+                                        </FormControl>
+                                    </Grid>
+                                </React.Fragment>
+                            })}
                         </Grid>
                     </Grid>
                 </MainCard>
@@ -141,8 +153,8 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
     );
 };
 
-SliderCard.propTypes = {
+SelectorCard.propTypes = {
     isLoading: PropTypes.bool
 };
 
-export default SliderCard;
+export default SelectorCard;

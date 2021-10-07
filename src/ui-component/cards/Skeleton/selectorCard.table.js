@@ -135,22 +135,30 @@ const SelectorCard = ({ isLoading }) => {
                                         </Grid>
                                     </Grid>
                                     <Grid container>
-                                        <Grid item>
-                                            {years.map((data, index) => (
-                                                <FormControl
-                                                    variant="standard"
-                                                    sx={{ m: 1, minWidth: 120 }}
-                                                    key={data.id}
-                                                    className={classes.secondary}
-                                                >
-                                                    <InputLabel id={data.id}>{data.name}</InputLabel>
-                                                    <Select label={data.name} value={data.sesonalCondition} key={data.id}>
-                                                        <MenuItem value="wet">wet</MenuItem>
-                                                        <MenuItem value="dry">dry</MenuItem>
-                                                        <MenuItem value="avg">avg</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            ))}
+                                        <Grid item xs={12}>
+                                            <Typography className={classes.secondary}>Test</Typography>
+                                        </Grid>
+                                        <Grid container>
+                                            <Grid item>
+                                                <table className={classes.secondary}>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>name</th>
+                                                            <th>conditions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {years.map((data, index) => (
+                                                            <tr key={index}>
+                                                                <td key={1}>{data.id}</td>
+                                                                <td key={2}>{data.name}</td>
+                                                                <td key={3}>{data.sesonalCondition}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>

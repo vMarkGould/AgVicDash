@@ -85,17 +85,12 @@ const SelectorCard = ({ isLoading }) => {
     const classes = useStyles();
     const selectorClass = useSelectorStyles();
     const [selectorValue, setSelectorvalue] = useState('');
-    // console.log(selectorClass);
+    console.log(selectorClass);
     const [years, setYears] = useState([
         {
             id: 1,
             name: 'Year1',
             sesonalCondition: 'wet'
-        },
-        {
-            id: 2,
-            name: 'Year2',
-            sesonalCondition: 'dry'
         }
     ]);
 
@@ -135,22 +130,42 @@ const SelectorCard = ({ isLoading }) => {
                                         </Grid>
                                     </Grid>
                                     <Grid container>
-                                        <Grid item>
-                                            {years.map((data, index) => (
-                                                <FormControl
-                                                    variant="standard"
-                                                    sx={{ m: 1, minWidth: 120 }}
-                                                    key={data.id}
-                                                    className={classes.secondary}
-                                                >
-                                                    <InputLabel id={data.id}>{data.name}</InputLabel>
-                                                    <Select label={data.name} value={data.sesonalCondition} key={data.id}>
-                                                        <MenuItem value="wet">wet</MenuItem>
-                                                        <MenuItem value="dry">dry</MenuItem>
-                                                        <MenuItem value="avg">avg</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            ))}
+                                        <Grid item xs={12}>
+                                            <Typography className={classes.secondary}>Test</Typography>
+                                        </Grid>
+                                        {console.log('Years object:')}
+                                        {console.log(years)}
+                                        {console.log('Years ID:')}
+                                        {console.log(years.id)}
+                                        <Grid container>
+                                            {years.forEach((data, index) => {
+                                                console.log(`Current index: ${index}`);
+                                                console.log(data);
+                                                <div>
+                                                    {console.log(`Current index: ${index}`)}
+                                                    {console.log(data)}
+                                                    <Grid item xs={12}>
+                                                        <h1>test2</h1>
+                                                        <Typography className={classes.secondary}>{data.name}</Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                                                            <InputLabel id={data.id}>{data.name}</InputLabel>
+                                                            <Select
+                                                                labelId={data.name}
+                                                                id={data.id.toString()}
+                                                                onChange={updateFieldChanged({ index })}
+                                                                label={data.name}
+                                                                default={data.seasonalCondition}
+                                                            >
+                                                                <MenuItem value="wet">wet</MenuItem>
+                                                                <MenuItem value="dry">dry</MenuItem>
+                                                                <MenuItem value="avg">avg</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
+                                                </div>;
+                                            })}
                                         </Grid>
                                     </Grid>
                                 </Grid>

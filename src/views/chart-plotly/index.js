@@ -11,6 +11,7 @@ import PlotlyChart from './plotlychart';
 import MainCard from 'ui-component/cards/MainCard';
 
 import SliderCard from 'ui-component/cards/Skeleton/sliderCard';
+import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
 
 //= =============================|| SAMPLE PAGE ||==============================//
 
@@ -59,6 +60,11 @@ const ChartPlotly = () => {
                             max={1000}
                         />
                     </Grid>
+                </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container>
+                    <SelectorCard isLoading={isLoading} />
                 </Grid>
             </Grid>
             <Grid item xs={12}>
