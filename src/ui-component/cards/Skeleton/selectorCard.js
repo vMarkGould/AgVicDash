@@ -57,24 +57,49 @@ const useStyles = makeStyles((theme) => ({
     padding: {
         paddingTop: 0,
         paddingBottom: 0
+    },
+    formControl: {
+        color: theme.palette.secondary.main
+    },
+    selectMenu: {
+        color: theme.palette.secondary.main,
+        '&:before': {
+            borderColor: theme.palette.secondary.main
+        },
+        '&:after': {
+            borderColor: theme.palette.secondary.main
+        },
+        '& .MuiSelect-select': {
+            color: theme.palette.secondary.main
+        },
+        '& .MuiSvgIcon-root': {
+            color: theme.palette.secondary.main
+        }
+    },
+    inputLabel: {
+        color: theme.palette.secondary.light,
+        '& .focused': {
+            color: '#fff'
+        }
+    },
+    MuiInputLabel: {
+        root: {
+            '&$shrink': {
+                color: '#000',
+                '&$focused': {
+                    color: theme.palette.secondary.light
+                }
+            }
+        }
+    },
+    menuItem: {
+        color: theme.palette.secondary.main
     }
 }));
 
 const useSelectorStyles = makeStyles((theme) => ({
-    thumb: {
-        backgroundColor: theme.palette.secondary.main
-    },
-    active: {
-        background: theme.palette.secondary.light,
-        color: theme.palette.secondary.light
-    },
-    track: {
-        color: theme.palette.secondary.main,
-        backgroundColor: theme.palette.secondary.main
-    },
-    rail: {
-        color: theme.palette.secondary.main,
-        background: theme.palette.secondary.main
+    formControl: {
+        color: theme.palette.secondary.main
     }
 }));
 function valuetext(value) {
@@ -96,6 +121,11 @@ const SelectorCard = ({ isLoading }) => {
             id: 2,
             name: 'Year2',
             sesonalCondition: 'dry'
+        },
+        {
+            id: 3,
+            name: 'Year3',
+            sesonalCondition: 'avg'
         }
     ]);
 
@@ -141,13 +171,27 @@ const SelectorCard = ({ isLoading }) => {
                                                     variant="standard"
                                                     sx={{ m: 1, minWidth: 120 }}
                                                     key={data.id}
-                                                    className={classes.secondary}
+                                                    className={classes.formControl}
                                                 >
-                                                    <InputLabel id={data.id}>{data.name}</InputLabel>
-                                                    <Select label={data.name} value={data.sesonalCondition} key={data.id}>
-                                                        <MenuItem value="wet">wet</MenuItem>
-                                                        <MenuItem value="dry">dry</MenuItem>
-                                                        <MenuItem value="avg">avg</MenuItem>
+                                                    <InputLabel id={data.id} className={classes.inputLabel}>
+                                                        {data.name}
+                                                    </InputLabel>
+                                                    {console.log(data.sesonalCondition)}
+                                                    <Select
+                                                        label={data.name}
+                                                        value={data.sesonalCondition}
+                                                        key={data.id}
+                                                        className={classes.selectMenu}
+                                                    >
+                                                        <MenuItem className={classes.menuItem} value="wet">
+                                                            wet
+                                                        </MenuItem>
+                                                        <MenuItem className={classes.menuItem} value="dry">
+                                                            dry
+                                                        </MenuItem>
+                                                        <MenuItem className={classes.menuItem} value="avg">
+                                                            avg
+                                                        </MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             ))}
