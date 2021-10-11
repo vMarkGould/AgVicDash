@@ -106,34 +106,30 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
             ) : (
                 <MainCard border={false} className={classes.card} contentClass={classes.content}>
                     <Grid container>
-                        <Grid item xs={12}>
-                            <Grid container>
-                                <Grid item xs={6}>
-                                    <Typography variant="subtitle1" align="left" className={classes.secondary}>
-                                        {unit} {sliderValue}
-                                    </Typography>
-                                </Grid>
-                                <Grid xs={6}>
-                                    <Typography variant="subtitle1" className={classes.secondary}>
-                                        {label}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle1" align="left" className={classes.secondary}>
+                                {unit} {sliderValue}
+                            </Typography>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Slider
-                                color="secondary"
-                                aria-label={label}
-                                value={sliderValue}
-                                getAriaValueText={valuetext}
-                                step={step}
-                                marks
-                                min={min}
-                                max={max}
-                                valueLabelDisplay="auto"
-                                onChange={onChange}
-                            />
+                        <Grid item xs={6}>
+                            <Typography variant="subtitle1" className={classes.secondary}>
+                                {label}
+                            </Typography>
                         </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Slider
+                            color="secondary"
+                            aria-label={label}
+                            value={sliderValue}
+                            getAriaValueText={valuetext}
+                            step={step}
+                            marks
+                            min={min}
+                            max={max}
+                            valueLabelDisplay="auto"
+                            onChange={onChange}
+                        />
                     </Grid>
                 </MainCard>
             )}

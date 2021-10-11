@@ -161,12 +161,12 @@ const SelectorCard = ({ isLoading }) => {
                 <TotalIncomeCard />
             ) : (
                 <Grid container spacing={gridSpacing}>
-                    <Grid item xs={8}>
+                    <Grid item>
                         <MainCard border={false} className={classes.card} contentClass={classes.content}>
                             <Grid container>
-                                <Grid item xs={12}>
+                                <Grid item>
                                     <Grid container>
-                                        <Grid item xs={12}>
+                                        <Grid item>
                                             <Typography variant="subtitle1" align="left" className={classes.secondary}>
                                                 Yearly Seasonal outlook
                                             </Typography>
@@ -177,7 +177,7 @@ const SelectorCard = ({ isLoading }) => {
                                             {years.map((data, index) => (
                                                 <FormControl
                                                     variant="standard"
-                                                    sx={{ m: 1, minWidth: 120 }}
+                                                    sx={{ m: 1, minWidth: 60 }}
                                                     key={index}
                                                     className={classes.formControl}
                                                 >
