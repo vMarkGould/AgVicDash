@@ -82,33 +82,18 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.secondary[200]
         }
     },
-    MuiInputLabel: {
-        root: {
-            '&$shrink': {
-                color: '#000',
-                '&$focused': {
-                    color: theme.palette.secondary.light
-                }
-            }
-        }
-    },
     menuItem: {
         color: theme.palette.secondary.main
     }
 }));
 
-const useSelectorStyles = makeStyles((theme) => ({
-    formControl: {
-        color: theme.palette.secondary.main
-    }
-}));
 function valuetext(value) {
     return `${value}`;
 }
-// ===========================|| DASHBOARD - Selector ||=========================== //
+
+// ===========================|| Selector ||=========================== //
 const SelectorCard = ({ isLoading }) => {
     const classes = useStyles();
-    const selectorClass = useSelectorStyles();
     const [selectorValue, setSelectorvalue] = useState('');
     // console.log(selectorClass);
     const [years, setYears] = useState([
@@ -165,30 +150,18 @@ const SelectorCard = ({ isLoading }) => {
     ]);
 
     const updateFieldChanged = (index) => (e) => {
-        // console.log('index: ' + index);
-        // console.log('property name: '+ e.target.name);
         const newArr = [...years]; // copying the old datas array
-        newArr[index] = e.target.value; // replace e.target.value with whatever you want to change it to
+        newArr[index].sesonalCondition = e.target.value; // replace e.target.value with whatever you want to change it to
         setYears(newArr); // ??
     };
-    /*
-    SelectorCard.propTypes = {
-        setSlidervalue: PropTypes.func,
-        sliderValue: PropTypes.number,
-        unit: PropTypes.string,
-        label: PropTypes.string,
-        step: PropTypes.number,
-        min: PropTypes.number,
-        max: PropTypes.number
-    };
-    */
+
     return (
         <>
             {isLoading ? (
                 <TotalIncomeCard />
             ) : (
                 <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12}>
+                    <Grid item xs={8}>
                         <MainCard border={false} className={classes.card} contentClass={classes.content}>
                             <Grid container>
                                 <Grid item xs={12}>
@@ -205,18 +178,19 @@ const SelectorCard = ({ isLoading }) => {
                                                 <FormControl
                                                     variant="standard"
                                                     sx={{ m: 1, minWidth: 120 }}
-                                                    key={data.id}
+                                                    key={index}
                                                     className={classes.formControl}
                                                 >
                                                     <InputLabel id={data.id} className={classes.inputLabel}>
                                                         {data.name}
                                                     </InputLabel>
-                                                    {console.log(data.sesonalCondition)}
                                                     <Select
                                                         label={data.name}
+                                                        name={data.name}
                                                         value={data.sesonalCondition}
-                                                        key={data.id}
+                                                        key={index}
                                                         className={classes.selectMenu}
+                                                        onChange={updateFieldChanged(index)}
                                                     >
                                                         <MenuItem className={classes.menuItem} value="wet">
                                                             wet
