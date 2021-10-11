@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import { Typography, Selector, Grid, FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
+import { Typography, Selector, Grid, FormControl, MenuItem, InputLabel, Select, NativeSelect } from '@material-ui/core';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -184,24 +184,25 @@ const SelectorCard = ({ isLoading }) => {
                                                     <InputLabel id={data.id} className={classes.inputLabel}>
                                                         {data.name}
                                                     </InputLabel>
-                                                    <Select
+                                                    <NativeSelect
                                                         label={data.name}
                                                         name={data.name}
                                                         value={data.sesonalCondition}
                                                         key={index}
                                                         className={classes.selectMenu}
+                                                        native="true"
                                                         onChange={updateFieldChanged(index)}
                                                     >
-                                                        <MenuItem className={classes.menuItem} value="wet">
+                                                        <option className={classes.menuItem} value="wet">
                                                             wet
-                                                        </MenuItem>
-                                                        <MenuItem className={classes.menuItem} value="dry">
+                                                        </option>
+                                                        <option className={classes.menuItem} value="dry">
                                                             dry
-                                                        </MenuItem>
-                                                        <MenuItem className={classes.menuItem} value="avg">
+                                                        </option>
+                                                        <option className={classes.menuItem} value="avg">
                                                             avg
-                                                        </MenuItem>
-                                                    </Select>
+                                                        </option>
+                                                    </NativeSelect>
                                                 </FormControl>
                                             ))}
                                         </Grid>
