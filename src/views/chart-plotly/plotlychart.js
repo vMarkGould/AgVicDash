@@ -38,9 +38,25 @@ const PlotlyChart = ({ isLoading, areaValue, years }) => {
     // const [i, seti] = useState(0);
     // use switch or lookup table function to calculate the Y Values
     useEffect(() => {
+        const newArr = [];
+        years.map((year, index) => {
+            console.log(year.value);
+            switch (year.value) {
+                case 'wet':
+                    newArr[index] = 2;
+                    return console.log('case wet');
+                case 'dry':
+                    newArr[index] = 1.5;
+                    return console.log('case dry');
+                default:
+                    newArr[index] = 1;
+                    return console.log('case avg');
+            }
+        });
+        console.log(newArr);
         setyValuesArea([2, 3, 4, 5, 6, 7, 8, 9, 10, 11 + areaValue / 1000, 9 + areaValue / 1000, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
         setyValuesLine([1, 2, 3, 4, 5, 6, 7, 8, 9, 10 + areaValue / 1000]);
-    }, [areaValue]);
+    }, [areaValue, years]);
 
     const theme = useTheme();
     // const { primary } = theme.palette.text;
