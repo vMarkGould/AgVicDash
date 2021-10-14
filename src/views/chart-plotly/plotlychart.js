@@ -28,7 +28,7 @@ const status = [
 ];
 
 // eslint-disable-next-line react/prefer-stateless-function
-const PlotlyChart = ({ isLoading, areaValue }) => {
+const PlotlyChart = ({ isLoading, areaValue, years }) => {
     const [value, setValue] = React.useState('Ten');
     const xValuesline = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const xValuesArea = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
@@ -36,6 +36,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
     const [yValuesLine, setyValuesLine] = useState([]);
     // const [trace1datax, setTrace1datax] = useState([]);
     // const [i, seti] = useState(0);
+    // use switch or lookup table function to calculate the Y Values
     useEffect(() => {
         setyValuesArea([2, 3, 4, 5, 6, 7, 8, 9, 10, 11 + areaValue / 1000, 9 + areaValue / 1000, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
         setyValuesLine([1, 2, 3, 4, 5, 6, 7, 8, 9, 10 + areaValue / 1000]);
