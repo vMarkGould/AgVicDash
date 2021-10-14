@@ -11,13 +11,14 @@ import PlotlyChart from './plotlychart';
 import MainCard from 'ui-component/cards/MainCard';
 
 import SliderCard from 'ui-component/cards/Skeleton/sliderCard';
+import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
 
 //= =============================|| SAMPLE PAGE ||==============================//
 
 const ChartPlotly = () => {
     const [isLoading, setLoading] = useState(true);
     const [areaValue, setAreaValue] = useState(1000);
-    const areaName = 'Area Applied To';
+    const areaName = 'Area Applied';
     const areaUnit = 'Ha';
     const [grainValue, setGrainValue] = useState(400);
     const grainName = 'Grain Price';
@@ -35,7 +36,7 @@ const ChartPlotly = () => {
             </Grid>
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
-                    <Grid item xs={3}>
+                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
                         <SliderCard
                             isLoading={isLoading}
                             setSlidervalue={setAreaValue}
@@ -47,7 +48,7 @@ const ChartPlotly = () => {
                             max={5000}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
                         <SliderCard
                             isLoading={isLoading}
                             setSlidervalue={setGrainValue}
@@ -60,6 +61,9 @@ const ChartPlotly = () => {
                         />
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={11}>
+                <SelectorCard isLoading={isLoading} />
             </Grid>
             <Grid item xs={12}>
                 <PlotlyChart isLoading={isLoading} areaValue={areaValue} />
