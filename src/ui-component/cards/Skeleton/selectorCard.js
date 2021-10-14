@@ -1,9 +1,22 @@
+/*
+Selector component to creat styleised Selectors on a card
+Arguments as follows:
+
+title: string
+slectorData: array of objects:
+[{id:id,label:name,value:value}]
+A drop down selector will be added for each object.
+
+It also takes in an Array of objects as menuOptions:
+[{id:id,label:name,value:value}]
+It will create a menu option for each object in the array
+*/
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
-import { Typography, Selector, Grid, FormControl, MenuItem, InputLabel, Select, NativeSelect } from '@material-ui/core';
+import { Typography, Grid, FormControl, InputLabel, NativeSelect } from '@material-ui/core';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -87,72 +100,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function valuetext(value) {
+/*
+    function valuetext(value) {
     return `${value}`;
 }
+*/
 
 // ===========================|| Selector ||=========================== //
-const SelectorCard = ({ isLoading }) => {
+const SelectorCard = ({ isLoading, selectorData, setSelectorData, menuOptions, title }) => {
     const classes = useStyles();
-    const [selectorValue, setSelectorvalue] = useState('');
+    // const [selectorValue, setSelectorvalue] = useState('');
     // console.log(selectorClass);
-    const [years, setYears] = useState([
-        {
-            id: 1,
-            name: 'Year1',
-            sesonalCondition: 'wet'
-        },
-        {
-            id: 2,
-            name: 'Year2',
-            sesonalCondition: 'dry'
-        },
-        {
-            id: 3,
-            name: 'Year3',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 4,
-            name: 'Year4',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 5,
-            name: 'Year5',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 6,
-            name: 'Year6',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 7,
-            name: 'Year7',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 8,
-            name: 'Year8',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 9,
-            name: 'Year9',
-            sesonalCondition: 'avg'
-        },
-        {
-            id: 10,
-            name: 'Year10',
-            sesonalCondition: 'avg'
-        }
-    ]);
-
     const updateFieldChanged = (index) => (e) => {
-        const newArr = [...years]; // copying the old datas array
-        newArr[index].sesonalCondition = e.target.value; // replace e.target.value with whatever you want to change it to
-        setYears(newArr); // ??
+        const newArr = [...selectorData]; // copying the old datas array
+        newArr[index].value = e.target.value; // replace e.target.value with whatever you want to change it to
+        setSelectorData(newArr); // ??
     };
 
     return (
@@ -168,13 +130,13 @@ const SelectorCard = ({ isLoading }) => {
                                     <Grid container>
                                         <Grid item>
                                             <Typography variant="subtitle1" align="left" className={classes.secondary}>
-                                                Yearly Seasonal outlook
+                                                {title}
                                             </Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container>
                                         <Grid item>
-                                            {years.map((data, index) => (
+                                            {selectorData.map((data, index) => (
                                                 <FormControl
                                                     variant="standard"
                                                     sx={{ m: 1, minWidth: 60 }}
@@ -187,21 +149,17 @@ const SelectorCard = ({ isLoading }) => {
                                                     <NativeSelect
                                                         label={data.name}
                                                         name={data.name}
-                                                        value={data.sesonalCondition}
+                                                        value={data.value}
                                                         key={index}
                                                         className={classes.selectMenu}
                                                         native="true"
                                                         onChange={updateFieldChanged(index)}
                                                     >
-                                                        <option className={classes.menuItem} value="wet">
-                                                            wet
-                                                        </option>
-                                                        <option className={classes.menuItem} value="dry">
-                                                            dry
-                                                        </option>
-                                                        <option className={classes.menuItem} value="avg">
-                                                            avg
-                                                        </option>
+                                                        {menuOptions.map((options, index) => (
+                                                            <option key={index} className={classes.menuItem} value={options.name}>
+                                                                {options.value}
+                                                            </option>
+                                                        ))}
                                                     </NativeSelect>
                                                 </FormControl>
                                             ))}
@@ -218,7 +176,11 @@ const SelectorCard = ({ isLoading }) => {
 };
 
 SelectorCard.propTypes = {
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
+    selectorData: PropTypes.array,
+    setSelectorData: PropTypes.func,
+    menuOptions: PropTypes.array,
+    title: PropTypes.string
 };
 
 export default SelectorCard;

@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// Slider style
 const useSliderStyles = makeStyles((theme) => ({
     thumb: {
         backgroundColor: theme.palette.secondary.main
@@ -84,19 +85,9 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
     const classes = useStyles();
     const sliderClass = useSliderStyles();
     // const [slidervalue, setsliderValue] = useState(1000);
-    console.log(sliderClass);
+    // console.log(sliderClass);
     const onChange = (e, value) => {
         setSlidervalue(value);
-    };
-
-    SliderCard.propTypes = {
-        setSlidervalue: PropTypes.func,
-        sliderValue: PropTypes.number,
-        unit: PropTypes.string,
-        label: PropTypes.string,
-        step: PropTypes.number,
-        min: PropTypes.number,
-        max: PropTypes.number
     };
 
     return (
@@ -138,7 +129,14 @@ const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step,
 };
 
 SliderCard.propTypes = {
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
+    setSlidervalue: PropTypes.func,
+    sliderValue: PropTypes.number,
+    unit: PropTypes.string,
+    label: PropTypes.string,
+    step: PropTypes.number,
+    min: PropTypes.number,
+    max: PropTypes.number
 };
 
 export default SliderCard;
