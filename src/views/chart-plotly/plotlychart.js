@@ -28,7 +28,7 @@ const status = [
 ];
 
 // eslint-disable-next-line react/prefer-stateless-function
-const PlotlyChart = ({ isLoading, areaValue, years }) => {
+const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ureaValue }) => {
     const [value, setValue] = React.useState('Ten');
     const xValuesline = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const xValuesArea = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
@@ -36,6 +36,20 @@ const PlotlyChart = ({ isLoading, areaValue, years }) => {
     const [yValuesLine, setyValuesLine] = useState([]);
     // const [trace1datax, setTrace1datax] = useState([]);
     // const [i, seti] = useState(0);
+    const cost = -Math.abs((propertySize / 500) * 7756);
+    const ongoingCost = -Math.abs((propertySize / 500) * -172);
+    const ureaApplied = 65;
+    const additionalYield = 0.5;
+    const hayPrice = 200;
+    const extraIncomeWet = additionalYield * grainValue;
+    console.log(extraIncomeWet);
+    const extraCost = ureaApplied * (ureaValue / 1000);
+    console.log(extraCost);
+    const netGain = extraIncomeWet - extraCost;
+    console.log(netGain);
+    const totalNetGain = netGain * areaValue;
+    console.log('total net gain');
+    console.log(totalNetGain);
     // use switch or lookup table function to calculate the Y Values
     useEffect(() => {
         const newArr = [];
@@ -43,20 +57,32 @@ const PlotlyChart = ({ isLoading, areaValue, years }) => {
             console.log(year.value);
             switch (year.value) {
                 case 'wet':
-                    newArr[index] = 2;
-                    return console.log('case wet');
+                    if (index === 0) {
+                        newArr[index] = cost + totalNetGain;
+                    } else {
+                        newArr[index] = newArr[index - 1] + ongoingCost + totalNetGain;
+                    }
+                    return console.log(newArr[index]);
                 case 'dry':
-                    newArr[index] = 1.5;
-                    return console.log('case dry');
+                    if (index === 0) {
+                        newArr[index] = cost;
+                    } else {
+                        newArr[index] = newArr[index - 1] + ongoingCost;
+                    }
+                    return console.log(newArr[index]);
                 default:
-                    newArr[index] = 1;
-                    return console.log('case avg');
+                    if (index === 0) {
+                        newArr[index] = cost;
+                    } else {
+                        newArr[index] = newArr[index - 1] + ongoingCost;
+                    }
+                    return console.log(newArr[index]);
             }
         });
         console.log(newArr);
+        setyValuesLine(newArr);
         setyValuesArea([2, 3, 4, 5, 6, 7, 8, 9, 10, 11 + areaValue / 1000, 9 + areaValue / 1000, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
-        setyValuesLine([1, 2, 3, 4, 5, 6, 7, 8, 9, 10 + areaValue / 1000]);
-    }, [areaValue, years]);
+    }, [areaValue, years, propertySize, grainValue, ureaValue]);
 
     const theme = useTheme();
     // const { primary } = theme.palette.text;
