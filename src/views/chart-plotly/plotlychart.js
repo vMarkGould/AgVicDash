@@ -3,7 +3,8 @@ import Plotly from 'plotly.js-basic-dist';
 import NumberFormat from 'react-number-format';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
-import { Grid, MenuItem, TextField, Typography, useTheme } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
+// MenuItem, TextField,
 
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
@@ -13,7 +14,7 @@ import { gridSpacing } from 'store/constant';
 
 const Plot = createPlotlyComponent(Plotly);
 
-const status = [
+/* const status = [
     {
         value: 'Ten',
         label: 'Ten Years'
@@ -26,11 +27,11 @@ const status = [
         value: 'Thirty',
         label: 'Thirty Years'
     }
-];
+]; */
 
 // eslint-disable-next-line react/prefer-stateless-function
 const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ureaValue }) => {
-    const [value, setValue] = React.useState('Ten');
+    // const [value, setValue] = React.useState('Ten');
     const xValuesline = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const xValuesArea = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     const [yValuesArea, setyValuesArea] = useState([]);
@@ -109,7 +110,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         ]);
         console.log('y Values Area');
         console.log(yValuesArea);
-    }, [areaValue, years, propertySize, grainValue, ureaValue]);
+    }, [areaValue, years, propertySize, grainValue, ureaValue, cost, costErr, ongoingCost, totalNetGain, yValuesArea]);
 
     const theme = useTheme();
     // const { primary } = theme.palette.text;
@@ -241,12 +242,37 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                                 />
                                             </Typography>
                                             <Typography variant="subtitle2">
-                                                {value} Year Return on Investment - for added urea area of: {areaValue}Ha
+                                                Ten Year Return on Investment - using <b>{areaValue}Ha</b> of Urea at <b>${ureaValue} </b>
+                                                and a grain price of <b>${grainValue}</b>
+                                            </Typography>
+                                            <Typography variant="subtitle2">
+                                                Initial costs for the soil probes and weather stations is
+                                                <b>
+                                                    <NumberFormat
+                                                        value={cost}
+                                                        displayType="text"
+                                                        thousandSeparator={seperatorOn}
+                                                        prefix=" $"
+                                                        suffix=" "
+                                                        allowNegative={!seperatorOn}
+                                                    />
+                                                </b>
+                                                and the ongoing costs per year for the technology are
+                                                <b>
+                                                    <NumberFormat
+                                                        value={ongoingCost}
+                                                        displayType="text"
+                                                        thousandSeparator={seperatorOn}
+                                                        prefix=" $"
+                                                        suffix=" "
+                                                        allowNegative={!seperatorOn}
+                                                    />
+                                                </b>
                                             </Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item>
+                                {/* <Grid item>
                                     <TextField
                                         id="standard-select-currency"
                                         select
@@ -259,7 +285,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
@@ -281,7 +307,10 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
 
 PlotlyChart.propTypes = {
     isLoading: PropTypes.bool,
-    years: PropTypes.object
+    years: PropTypes.object,
+    propertySize: PropTypes.number,
+    grainValue: PropTypes.number,
+    ureaValue: PropTypes.number
 };
 
 export default PlotlyChart;
