@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
             borderColor: theme.palette.secondary.main
         },
         '& .MuiNativeSelect-select': {
-            color: theme.palette.secondary.main
+            color: theme.palette.secondary.light
         },
         '& .MuiSvgIcon-root': {
             color: theme.palette.secondary.main

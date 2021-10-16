@@ -17,7 +17,7 @@ import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
 
 const ChartPlotly = () => {
     const [isLoading, setLoading] = useState(true);
-    const [areaValue, setAreaValue] = useState(1500);
+    const [areaValue, setAreaValue] = useState(600);
     const [propertySize, setPropertySize] = useState(1500);
     const [grainValue, setGrainValue] = useState(260);
     const [ureaValue, setUreaValue] = useState(400);
@@ -25,7 +25,7 @@ const ChartPlotly = () => {
         {
             id: 1,
             name: 'Year1',
-            value: 'wet'
+            value: 'avg'
         },
         {
             id: 2,
@@ -50,7 +50,7 @@ const ChartPlotly = () => {
         {
             id: 6,
             name: 'Year6',
-            value: 'avg'
+            value: 'wet'
         },
         {
             id: 7,
