@@ -59,7 +59,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     useEffect(() => {
         const newArr = [];
         years.map((year, index) => {
-            console.log(year.value);
+            console.log(years);
             switch (year.value) {
                 case 'wet':
                     if (index === 0) {
@@ -110,7 +110,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         ]);
         console.log('y Values Area');
         console.log(yValuesArea);
-    }, [areaValue, years, propertySize, grainValue, ureaValue, cost, costErr, ongoingCost, totalNetGain, yValuesArea]);
+    }, [areaValue, years, propertySize, grainValue, ureaValue]);
 
     const theme = useTheme();
     // const { primary } = theme.palette.text;

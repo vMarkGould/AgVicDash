@@ -9,20 +9,20 @@ const icons = {
 
 // ===========================|| Chart MENU ITEMS ||=========================== //
 
-const chart = {
-    id: 'chart',
+const roi = {
+    id: 'roi',
     title: 'Return On Investment',
     type: 'group',
     children: [
         {
-            id: 'plotlychart',
+            id: 'soilMoistureRoi',
             title: 'Soil Moisture',
             type: 'item',
-            url: '/chart-plotly',
+            url: '/soil-moisture-roi',
             icon: icons.IconDeviceAnalytics,
             breadcrumbs: false
         }
     ]
 };
 
-export default chart;
+export default roi;

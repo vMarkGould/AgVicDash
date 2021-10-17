@@ -16,7 +16,7 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
-const ChartPlotly = Loadable(lazy(() => import('views/chart-plotly')));
+const SoilMoistureRoi = Loadable(lazy(() => import('views/soil-moisture-roi')));
 
 // ===========================|| MAIN ROUTING ||=========================== //
 
@@ -26,15 +26,15 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            element: <DashboardDefault />
+            element: <SoilMoistureRoi />
+        },
+        {
+            path: '/soil-moisture-roi',
+            element: <SoilMoistureRoi />
         },
         {
             path: '/dashboard/default',
             element: <DashboardDefault />
-        },
-        {
-            path: '/chart-plotly',
-            element: <ChartPlotly />
         },
         {
             path: '/utils/util-typography',

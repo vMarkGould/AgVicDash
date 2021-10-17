@@ -15,7 +15,7 @@ import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
 
 //= =============================|| SAMPLE PAGE ||==============================//
 
-const ChartPlotly = () => {
+const SoilMoistureRoi = () => {
     const [isLoading, setLoading] = useState(true);
     const [areaValue, setAreaValue] = useState(600);
     const [propertySize, setPropertySize] = useState(1500);
@@ -176,4 +176,4 @@ const ChartPlotly = () => {
         </Grid>
     );
 };
-export default ChartPlotly;
+export default SoilMoistureRoi;
