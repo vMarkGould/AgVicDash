@@ -63,25 +63,25 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             switch (year.value) {
                 case 'wet':
                     if (index === 0) {
-                        newArr[index] = cost + totalNetGain;
+                        newArr[index] = Math.round(cost + totalNetGain);
                     } else {
-                        newArr[index] = newArr[index - 1] + ongoingCost + totalNetGain;
+                        newArr[index] = Math.round(newArr[index - 1] + ongoingCost + totalNetGain);
                     }
-                    return console.log(newArr[index]);
+                    return null;
                 case 'dry':
                     if (index === 0) {
-                        newArr[index] = cost;
+                        newArr[index] = Math.round(cost);
                     } else {
-                        newArr[index] = newArr[index - 1] + ongoingCost;
+                        newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
                     }
-                    return console.log(newArr[index]);
+                    return null;
                 default:
                     if (index === 0) {
-                        newArr[index] = cost;
+                        newArr[index] = Math.round(cost);
                     } else {
-                        newArr[index] = newArr[index - 1] + ongoingCost;
+                        newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
                     }
-                    return console.log(newArr[index]);
+                    return null;
             }
         });
         // console.log(newArr);
@@ -240,10 +240,11 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                                     thousandSeparator={seperatorOn}
                                                     prefix="$"
                                                 />
+                                                <Typography varient="subtitle1">Ten Year Return on Investment</Typography>
                                             </Typography>
                                             <Typography variant="subtitle2">
-                                                Ten Year Return on Investment - using <b>{areaValue}Ha</b> of Urea at <b>${ureaValue} </b>
-                                                and a grain price of <b>${grainValue}</b>
+                                                By Spreading additional urea in wet years over <b>{areaValue}Ha</b> at
+                                                <b> ${ureaValue} </b>per tonne and assuming a grain price of <b>${grainValue} </b>per tonne.
                                             </Typography>
                                             <Typography variant="subtitle2">
                                                 Initial costs for the soil probes and weather stations is
@@ -257,7 +258,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                                         allowNegative={!seperatorOn}
                                                     />
                                                 </b>
-                                                and the ongoing costs per year for the technology are
+                                                and the ongoing costs per year for the technology is
                                                 <b>
                                                     <NumberFormat
                                                         value={ongoingCost}
@@ -307,7 +308,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
 
 PlotlyChart.propTypes = {
     isLoading: PropTypes.bool,
-    years: PropTypes.object,
+    years: PropTypes.array,
     propertySize: PropTypes.number,
     grainValue: PropTypes.number,
     ureaValue: PropTypes.number
