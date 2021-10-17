@@ -170,9 +170,9 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         autosize: true,
         groupclick: true,
         showlegend: true,
-        // automargin: true,
+        automargin: true,
         legend: { orientation: 'h', xanchor: 'center', x: 0.5, y: 1.2, font: { color: grey500 } },
-        margin: { l: 50, r: 50, t: 0, b: 90 },
+        // margin: { l: 50, r: 50, t: 0, b: 90 },
         xaxis: {
             gridcolor: 'rgb(229,229,229)',
             range: [0, 9],
