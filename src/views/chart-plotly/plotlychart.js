@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Plotly from 'plotly.js-basic-dist';
+import NumberFormat from 'react-number-format';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
-import { Grid, MenuItem, TextField, Typography, useTheme } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
+// MenuItem, TextField,
 
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
@@ -12,7 +14,7 @@ import { gridSpacing } from 'store/constant';
 
 const Plot = createPlotlyComponent(Plotly);
 
-const status = [
+/* const status = [
     {
         value: 'Ten',
         label: 'Ten Years'
@@ -25,21 +27,90 @@ const status = [
         value: 'Thirty',
         label: 'Thirty Years'
     }
-];
+]; */
 
 // eslint-disable-next-line react/prefer-stateless-function
-const PlotlyChart = ({ isLoading, areaValue }) => {
-    const [value, setValue] = React.useState('Ten');
-    const xValuesline = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const xValuesArea = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ureaValue }) => {
+    // const [value, setValue] = React.useState('Ten');
+    const xValuesline = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const xValuesArea = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     const [yValuesArea, setyValuesArea] = useState([]);
     const [yValuesLine, setyValuesLine] = useState([]);
     // const [trace1datax, setTrace1datax] = useState([]);
     // const [i, seti] = useState(0);
+    // console.log(years);
+    const seperatorOn = true;
+    const cost = -Math.abs((propertySize / 500) * 7756);
+    const costErr = 7756 * 0.5;
+    const ongoingCost = -Math.abs((propertySize / 500) * 172);
+    const ureaApplied = 65;
+    const additionalYield = 0.5;
+    const hayPrice = 200;
+    const extraIncomeWet = additionalYield * grainValue;
+    // console.log(extraIncomeWet);
+    const extraCost = ureaApplied * (ureaValue / 1000);
+    // console.log(extraCost);
+    const netGain = extraIncomeWet - extraCost;
+    // console.log(netGain);
+    const totalNetGain = netGain * areaValue;
+    // console.log('total net gain');
+    // console.log(totalNetGain);
+    // use switch or lookup table function to calculate the Y Values
     useEffect(() => {
-        setyValuesArea([2, 3, 4, 5, 6, 7, 8, 9, 10, 11 + areaValue / 1000, 9 + areaValue / 1000, 8, 7, 6, 5, 4, 3, 2, 1, 0]);
-        setyValuesLine([1, 2, 3, 4, 5, 6, 7, 8, 9, 10 + areaValue / 1000]);
-    }, [areaValue]);
+        const newArr = [];
+        years.map((year, index) => {
+            console.log(year.value);
+            switch (year.value) {
+                case 'wet':
+                    if (index === 0) {
+                        newArr[index] = cost + totalNetGain;
+                    } else {
+                        newArr[index] = newArr[index - 1] + ongoingCost + totalNetGain;
+                    }
+                    return console.log(newArr[index]);
+                case 'dry':
+                    if (index === 0) {
+                        newArr[index] = cost;
+                    } else {
+                        newArr[index] = newArr[index - 1] + ongoingCost;
+                    }
+                    return console.log(newArr[index]);
+                default:
+                    if (index === 0) {
+                        newArr[index] = cost;
+                    } else {
+                        newArr[index] = newArr[index - 1] + ongoingCost;
+                    }
+                    return console.log(newArr[index]);
+            }
+        });
+        // console.log(newArr);
+        setyValuesLine(newArr);
+        setyValuesArea([
+            newArr[0] + costErr,
+            newArr[1] + costErr,
+            newArr[2] + costErr,
+            newArr[3] + costErr,
+            newArr[4] + costErr,
+            newArr[5] + costErr,
+            newArr[6] + costErr,
+            newArr[7] + costErr,
+            newArr[8] + costErr,
+            newArr[9] + costErr,
+            newArr[9] - costErr,
+            newArr[8] - costErr,
+            newArr[7] - costErr,
+            newArr[6] - costErr,
+            newArr[5] - costErr,
+            newArr[4] - costErr,
+            newArr[3] - costErr,
+            newArr[2] - costErr,
+            newArr[1] - costErr,
+            newArr[0] - costErr
+        ]);
+        console.log('y Values Area');
+        console.log(yValuesArea);
+    }, [areaValue, years, propertySize, grainValue, ureaValue, cost, costErr, ongoingCost, totalNetGain, yValuesArea]);
 
     const theme = useTheme();
     // const { primary } = theme.palette.text;
@@ -56,7 +127,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
         legendgroup: 'group1',
         fillcolor: 'rgba(0,100,80,0.2)',
         line: { color: 'transparent' },
-        name: 'Fair',
+        name: 'Return on Investment',
         showlegend: false,
         type: 'scatter'
     };
@@ -77,8 +148,8 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
         x: xValuesline,
         y: yValuesLine,
         line: { color: 'rgb(0,100,80)' },
-        mode: 'lines',
-        name: 'Fair',
+        mode: 'lines+markers',
+        name: 'Return on Investment',
         legendgroup: 'group1',
         type: 'scatter'
     };
@@ -92,32 +163,54 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
         legendgroup: 'group2',
         type: 'scatter'
     };
+    const space = ' - ';
     const chartLayout = {
         paper_bgcolor: 'rgb(255,255,255)',
         plot_bgcolor: 'rgb(255,255,255)',
         autosize: true,
         groupclick: true,
         showlegend: true,
-        legend: { orientation: 'h', font: { color: grey500 } },
-        margin: { l: 30, r: 10, t: 50 },
+        automargin: true,
+        legend: { orientation: 'h', xanchor: 'center', x: 0.5, y: 1.2, font: { color: grey500 } },
+        // margin: { l: 50, r: 50, t: 0, b: 90 },
         xaxis: {
             gridcolor: 'rgb(229,229,229)',
-            range: [1, 10],
+            range: [0, 9],
             showgrid: false,
             showline: true,
             showticklabels: true,
             tickcolor: 'rgb(127,127,127)',
             ticks: 'outside',
-            zeroline: false
+            zeroline: true,
+            zerolinecolor: '#969696',
+            zerolinewidth: 4,
+            tickmode: 'array',
+            tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            ticktext: [
+                years[0].name + space + years[0].value,
+                years[1].name + space + years[1].value,
+                years[2].name + space + years[2].value,
+                years[3].name + space + years[3].value,
+                years[4].name + space + years[4].value,
+                years[5].name + space + years[5].value,
+                years[6].name + space + years[6].value,
+                years[7].name + space + years[7].value,
+                years[8].name + space + years[8].value,
+                years[9].name + space + years[9].value
+            ]
         },
         yaxis: {
             gridcolor: grey200,
             showgrid: true,
-            showline: false,
+            showline: true,
             showticklabels: true,
             tickcolor: 'rgb(255,255,255)',
-            ticks: 'outside',
-            zeroline: false
+            // ticks: 'outside',
+            zeroline: true,
+            zerolinecolor: '#969696',
+            zerolinewidth: 4,
+            showtickprefix: 'all',
+            tickprefix: '$'
         }
     };
     const { width, height, ref } = useResizeDetector({
@@ -140,16 +233,46 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
                                 <Grid item>
                                     <Grid container direction="column" spacing={1}>
                                         <Grid item>
-                                            <Typography variant="subtitle2">
-                                                {value} Year Return on Investment - an area size of: {areaValue}Ha
+                                            <Typography variant="h3">
+                                                <NumberFormat
+                                                    value={yValuesLine[9]}
+                                                    displayType="text"
+                                                    thousandSeparator={seperatorOn}
+                                                    prefix="$"
+                                                />
                                             </Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="h3">$2,324.00</Typography>
+                                            <Typography variant="subtitle2">
+                                                Ten Year Return on Investment - using <b>{areaValue}Ha</b> of Urea at <b>${ureaValue} </b>
+                                                and a grain price of <b>${grainValue}</b>
+                                            </Typography>
+                                            <Typography variant="subtitle2">
+                                                Initial costs for the soil probes and weather stations is
+                                                <b>
+                                                    <NumberFormat
+                                                        value={cost}
+                                                        displayType="text"
+                                                        thousandSeparator={seperatorOn}
+                                                        prefix=" $"
+                                                        suffix=" "
+                                                        allowNegative={!seperatorOn}
+                                                    />
+                                                </b>
+                                                and the ongoing costs per year for the technology are
+                                                <b>
+                                                    <NumberFormat
+                                                        value={ongoingCost}
+                                                        displayType="text"
+                                                        thousandSeparator={seperatorOn}
+                                                        prefix=" $"
+                                                        suffix=" "
+                                                        allowNegative={!seperatorOn}
+                                                    />
+                                                </b>
+                                            </Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item>
+                                {/* <Grid item>
                                     <TextField
                                         id="standard-select-currency"
                                         select
@@ -162,7 +285,7 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
                                             </MenuItem>
                                         ))}
                                     </TextField>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
                         <Grid item xs={12}>
@@ -183,7 +306,11 @@ const PlotlyChart = ({ isLoading, areaValue }) => {
 };
 
 PlotlyChart.propTypes = {
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
+    years: PropTypes.object,
+    propertySize: PropTypes.number,
+    grainValue: PropTypes.number,
+    ureaValue: PropTypes.number
 };
 
 export default PlotlyChart;

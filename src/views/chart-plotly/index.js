@@ -17,17 +17,15 @@ import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
 
 const ChartPlotly = () => {
     const [isLoading, setLoading] = useState(true);
-    const [areaValue, setAreaValue] = useState(1000);
-    const areaName = 'Area Applied';
-    const areaUnit = 'Ha';
-    const [grainValue, setGrainValue] = useState(400);
-    const grainName = 'Grain Price';
-    const grainUnit = '$';
+    const [areaValue, setAreaValue] = useState(600);
+    const [propertySize, setPropertySize] = useState(1500);
+    const [grainValue, setGrainValue] = useState(260);
+    const [ureaValue, setUreaValue] = useState(400);
     const [years, setYears] = useState([
         {
             id: 1,
             name: 'Year1',
-            value: 'wet'
+            value: 'avg'
         },
         {
             id: 2,
@@ -52,7 +50,7 @@ const ChartPlotly = () => {
         {
             id: 6,
             name: 'Year6',
-            value: 'avg'
+            value: 'wet'
         },
         {
             id: 7,
@@ -109,13 +107,25 @@ const ChartPlotly = () => {
                     <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
                         <SliderCard
                             isLoading={isLoading}
+                            setSlidervalue={setPropertySize}
+                            sliderValue={propertySize}
+                            unit="Ha"
+                            label="Property Size"
+                            step={100}
+                            min={areaValue}
+                            max={5000}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
+                        <SliderCard
+                            isLoading={isLoading}
                             setSlidervalue={setAreaValue}
                             sliderValue={areaValue}
-                            unit={areaUnit}
-                            label={areaName}
+                            unit="Ha"
+                            label="Area to apply added Urea"
                             step={100}
-                            min={100}
-                            max={5000}
+                            min={500}
+                            max={propertySize}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
@@ -123,11 +133,23 @@ const ChartPlotly = () => {
                             isLoading={isLoading}
                             setSlidervalue={setGrainValue}
                             sliderValue={grainValue}
-                            unit={grainUnit}
-                            label={grainName}
+                            unit="$"
+                            label="Grain Price"
                             step={10}
                             min={50}
-                            max={1000}
+                            max={600}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
+                        <SliderCard
+                            isLoading={isLoading}
+                            setSlidervalue={setUreaValue}
+                            sliderValue={ureaValue}
+                            unit="$"
+                            label="Urea Price"
+                            step={10}
+                            min={100}
+                            max={800}
                         />
                     </Grid>
                 </Grid>
@@ -142,7 +164,14 @@ const ChartPlotly = () => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <PlotlyChart isLoading={isLoading} areaValue={areaValue} years={years} />
+                <PlotlyChart
+                    isLoading={isLoading}
+                    areaValue={areaValue}
+                    years={years}
+                    propertySize={propertySize}
+                    grainValue={grainValue}
+                    ureaValue={ureaValue}
+                />
             </Grid>
         </Grid>
     );
