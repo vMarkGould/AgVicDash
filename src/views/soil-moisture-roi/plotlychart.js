@@ -63,25 +63,25 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             switch (year.value) {
                 case 'wet':
                     if (index === 0) {
-                        newArr[index] = cost + totalNetGain;
+                        newArr[index] = Math.round(cost + totalNetGain);
                     } else {
-                        newArr[index] = newArr[index - 1] + ongoingCost + totalNetGain;
+                        newArr[index] = Math.round(newArr[index - 1] + ongoingCost + totalNetGain);
                     }
-                    return console.log(newArr[index]);
+                    return null;
                 case 'dry':
                     if (index === 0) {
-                        newArr[index] = cost;
+                        newArr[index] = Math.round(cost);
                     } else {
-                        newArr[index] = newArr[index - 1] + ongoingCost;
+                        newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
                     }
-                    return console.log(newArr[index]);
+                    return null;
                 default:
                     if (index === 0) {
-                        newArr[index] = cost;
+                        newArr[index] = Math.round(cost);
                     } else {
-                        newArr[index] = newArr[index - 1] + ongoingCost;
+                        newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
                     }
-                    return console.log(newArr[index]);
+                    return null;
             }
         });
         // console.log(newArr);
@@ -170,9 +170,9 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         autosize: true,
         groupclick: true,
         showlegend: true,
-        automargin: true,
+        // automargin: true,
         legend: { orientation: 'h', xanchor: 'center', x: 0.5, y: 1.2, font: { color: grey500 } },
-        // margin: { l: 50, r: 50, t: 0, b: 90 },
+        margin: { l: 45, r: 10, t: 0, b: 90 },
         xaxis: {
             gridcolor: 'rgb(229,229,229)',
             range: [0, 9],
@@ -185,6 +185,8 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             zerolinecolor: '#969696',
             zerolinewidth: 4,
             tickmode: 'array',
+            tickfont: { family: 'Arial', size: 14 },
+            tickangle: 90,
             tickvals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             ticktext: [
                 years[0].name + space + years[0].value,
@@ -227,7 +229,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                 <SkeletonTotalGrowthBarChart />
             ) : (
                 <MainCard>
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={0}>
                         <Grid item xs={12}>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 <Grid item>
@@ -240,10 +242,11 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                                     thousandSeparator={seperatorOn}
                                                     prefix="$"
                                                 />
+                                                <Typography varient="subtitle1">Ten Year Return on Investment</Typography>
                                             </Typography>
                                             <Typography variant="subtitle2">
-                                                Ten Year Return on Investment - using <b>{areaValue}Ha</b> of Urea at <b>${ureaValue} </b>
-                                                and a grain price of <b>${grainValue}</b>
+                                                By Spreading additional urea in wet years over <b>{areaValue}Ha</b> at
+                                                <b> ${ureaValue} </b>per tonne and assuming a grain price of <b>${grainValue} </b>per tonne.
                                             </Typography>
                                             <Typography variant="subtitle2">
                                                 Initial costs for the soil probes and weather stations is
@@ -257,7 +260,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                                         allowNegative={!seperatorOn}
                                                     />
                                                 </b>
-                                                and the ongoing costs per year for the technology are
+                                                and the ongoing costs per year for the technology is
                                                 <b>
                                                     <NumberFormat
                                                         value={ongoingCost}
@@ -307,7 +310,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
 
 PlotlyChart.propTypes = {
     isLoading: PropTypes.bool,
-    years: PropTypes.object,
+    years: PropTypes.array,
     propertySize: PropTypes.number,
     grainValue: PropTypes.number,
     ureaValue: PropTypes.number

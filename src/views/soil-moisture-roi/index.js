@@ -1,179 +1,81 @@
-import React, { useEffect, useState } from 'react';
-
-// material-ui
-import { Typography, Grid } from '@material-ui/core';
-import { gridSpacing } from 'store/constant';
-
-// import plotly
-import PlotlyChart from './plotlychart';
-
-// project imports
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import SwipeableViews from 'react-swipeable-views';
+import { useTheme } from '@material-ui/styles';
+import { AppBar, Tabs, Tab, Typography, Box, Card } from '@material-ui/core';
 import MainCard from 'ui-component/cards/MainCard';
+import SoilMoistureRoi from './soil-moisture-roi';
 
-import SliderCard from 'ui-component/cards/Skeleton/sliderCard';
-import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
-
-//= =============================|| SAMPLE PAGE ||==============================//
-
-const SoilMoistureRoi = () => {
-    const [isLoading, setLoading] = useState(true);
-    const [areaValue, setAreaValue] = useState(600);
-    const [propertySize, setPropertySize] = useState(1500);
-    const [grainValue, setGrainValue] = useState(260);
-    const [ureaValue, setUreaValue] = useState(400);
-    const [years, setYears] = useState([
-        {
-            id: 1,
-            name: 'Year1',
-            value: 'avg'
-        },
-        {
-            id: 2,
-            name: 'Year2',
-            value: 'dry'
-        },
-        {
-            id: 3,
-            name: 'Year3',
-            value: 'avg'
-        },
-        {
-            id: 4,
-            name: 'Year4',
-            value: 'avg'
-        },
-        {
-            id: 5,
-            name: 'Year5',
-            value: 'avg'
-        },
-        {
-            id: 6,
-            name: 'Year6',
-            value: 'wet'
-        },
-        {
-            id: 7,
-            name: 'Year7',
-            value: 'avg'
-        },
-        {
-            id: 8,
-            name: 'Year8',
-            value: 'avg'
-        },
-        {
-            id: 9,
-            name: 'Year9',
-            value: 'avg'
-        },
-        {
-            id: 10,
-            name: 'Year10',
-            value: 'avg'
-        }
-    ]);
-    const menuOptions = [
-        {
-            id: 1,
-            name: 'wet',
-            value: 'wet'
-        },
-        {
-            id: 2,
-            name: 'dry',
-            value: 'dry'
-        },
-        {
-            id: 3,
-            name: 'avg',
-            value: 'avg'
-        }
-    ];
-    const selectorTitle = 'Yearly Seasonal Conditions';
-    useEffect(() => {
-        setLoading(false);
-    }, []);
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
     return (
-        <Grid container spacing={gridSpacing}>
-            <Grid item xs={12}>
-                <MainCard title="Soil Moisture">
-                    <Typography variant="body2">Information about Soil Moisture ROI</Typography>
-                </MainCard>
-            </Grid>
-            <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
-                        <SliderCard
-                            isLoading={isLoading}
-                            setSlidervalue={setPropertySize}
-                            sliderValue={propertySize}
-                            unit="Ha"
-                            label="Property Size"
-                            step={100}
-                            min={areaValue}
-                            max={5000}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
-                        <SliderCard
-                            isLoading={isLoading}
-                            setSlidervalue={setAreaValue}
-                            sliderValue={areaValue}
-                            unit="Ha"
-                            label="Area to apply added Urea"
-                            step={100}
-                            min={500}
-                            max={propertySize}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
-                        <SliderCard
-                            isLoading={isLoading}
-                            setSlidervalue={setGrainValue}
-                            sliderValue={grainValue}
-                            unit="$"
-                            label="Grain Price"
-                            step={10}
-                            min={50}
-                            max={600}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={5} lg={3} xl={2}>
-                        <SliderCard
-                            isLoading={isLoading}
-                            setSlidervalue={setUreaValue}
-                            sliderValue={ureaValue}
-                            unit="$"
-                            label="Urea Price"
-                            step={10}
-                            min={100}
-                            max={800}
-                        />
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} xl={11}>
-                <SelectorCard
-                    isLoading={isLoading}
-                    selectorData={years}
-                    setSelectorData={setYears}
-                    menuOptions={menuOptions}
-                    title={selectorTitle}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <PlotlyChart
-                    isLoading={isLoading}
-                    areaValue={areaValue}
-                    years={years}
-                    propertySize={propertySize}
-                    grainValue={grainValue}
-                    ureaValue={ureaValue}
-                />
-            </Grid>
-        </Grid>
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`full-width-tabpanel-${index}`}
+            aria-labelledby={`full-width-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
     );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired
 };
-export default SoilMoistureRoi;
+
+function a11yProps(index) {
+    return {
+        id: `full-width-tab-${index}`,
+        'aria-controls': `full-width-tabpanel-${index}`
+    };
+}
+
+export default function FullWidthTabs() {
+    const theme = useTheme();
+    const [value, setValue] = React.useState(0);
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+    const handleChangeIndex = (index) => {
+        setValue(index);
+    };
+
+    return (
+        <Card>
+            <AppBar position="static">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="secondary"
+                    textColor="inherit"
+                    variant="fullWidth"
+                    aria-label="full width tabs example"
+                >
+                    <Tab label="Soil Moisture ROI Calculator" {...a11yProps(0)} />
+                    <Tab label="Item Two" {...a11yProps(1)} />
+                    <Tab label="Item Three" {...a11yProps(2)} />
+                </Tabs>
+            </AppBar>
+            <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={value} onChangeIndex={handleChangeIndex}>
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                    <SoilMoistureRoi />
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                    Item Two
+                </TabPanel>
+                <TabPanel value={value} index={2} dir={theme.direction}>
+                    Item Three
+                </TabPanel>
+            </SwipeableViews>
+        </Card>
+    );
+}
