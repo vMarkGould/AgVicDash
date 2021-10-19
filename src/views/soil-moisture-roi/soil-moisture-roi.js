@@ -12,6 +12,7 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import SliderCard from 'ui-component/cards/Skeleton/sliderCard';
 import SelectorCard from 'ui-component/cards/Skeleton/selectorCard';
+import SoilMoistureRoiTitle from './soil-moisture-roi-title';
 
 //= =============================|| SAMPLE PAGE ||==============================//
 
@@ -99,31 +100,7 @@ const SoilMoistureRoi = () => {
     return (
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
-                <MainCard sx={{ width: 1, padding: 0 }}>
-                    <Grid item xs={12} sm={6} md={5} lg={8} xl={8}>
-                        <Typography varient="h1">Welcome to the soil moisture probe Return on investment calculator</Typography>
-                        <Typography variant="subtitle2" sx={{ width: 1, p: 1 }}>
-                            This calculator can be used as a guide to look at the possible return on investment for soil probes in a
-                            broadacre cropping farming system, the assumtions for this model are based on the data captured from a case
-                            study from the Victorian On-Farm Internet of things Trial.
-                            <br />
-                            You can adjust the return on investment to match your farm by adjusting the variables.
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={5} lg={4} xl={4}>
-                        <FormControlLabel
-                            control={
-                                <Switch
-                                    checked={isChecked}
-                                    onChange={() => {
-                                        setIsChecked((prev) => !prev);
-                                    }}
-                                />
-                            }
-                            label="Show Soil Moisture ROI Variables"
-                        />
-                    </Grid>
-                </MainCard>
+                <SoilMoistureRoiTitle isChecked={isChecked} setIsChecked={setIsChecked} />
             </Grid>
             <Grid item xs={12}>
                 <Collapse in={isChecked}>
