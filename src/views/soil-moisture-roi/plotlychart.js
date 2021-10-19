@@ -3,7 +3,7 @@ import Plotly from 'plotly.js-basic-dist';
 import NumberFormat from 'react-number-format';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
-import { Grid, Typography, Card, CardContent } from '@material-ui/core';
+import { Grid, Typography, Card, CardContent, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
 // MenuItem, TextField,
 
 // project imports
@@ -12,11 +12,13 @@ import MainCard from 'ui-component/cards/MainCard';
 import PropTypes from 'prop-types';
 import { gridSpacing } from 'store/constant';
 import { makeStyles, useTheme } from '@material-ui/styles';
+import { Finance } from 'financejs';
 
 const Plot = createPlotlyComponent(Plotly);
 const useStyles = makeStyles((theme) => ({
     card: {
-        backgroundColor: theme.palette.secondary.light
+        backgroundColor: theme.palette.secondary.light,
+        color: theme.palette.secondary.dark
     },
     content: {
         padding: '0px !important'
@@ -241,6 +243,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         // refreshMode: 'debounce',
         // refreshRate: 1000
     });
+    const [isNPVChecked, setIsNPVChecked] = useState(false);
     PlotlyChart.propTypes = {
         areaValue: PropTypes.number
     };
@@ -272,7 +275,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={10}>
                                 <Typography variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
                                     By Spreading additional urea in wet years over
                                     <b>
@@ -348,6 +351,22 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                     ))}
                                 </TextField>
                             </Grid> */}
+                            <Grid item xs={2}>
+                                <Tooltip title="Net Present Value">
+                                    <FormControlLabel
+                                        sx={{ color: theme.palette.secondary.dark }}
+                                        control={
+                                            <Switch
+                                                checked={isNPVChecked}
+                                                onChange={() => {
+                                                    setIsNPVChecked((prev) => !prev);
+                                                }}
+                                            />
+                                        }
+                                        label="NPV"
+                                    />
+                                </Tooltip>
+                            </Grid>
                             <Grid item xs={12}>
                                 <div ref={ref} style={{ display: 'flex', height: '100%' }}>
                                     <Plot
