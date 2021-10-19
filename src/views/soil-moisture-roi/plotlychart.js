@@ -3,7 +3,7 @@ import Plotly from 'plotly.js-basic-dist';
 import NumberFormat from 'react-number-format';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
-import { Grid, Typography, useTheme } from '@material-ui/core';
+import { Grid, Typography, Card, CardContent } from '@material-ui/core';
 // MenuItem, TextField,
 
 // project imports
@@ -11,8 +11,28 @@ import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowth
 import MainCard from 'ui-component/cards/MainCard';
 import PropTypes from 'prop-types';
 import { gridSpacing } from 'store/constant';
+import { makeStyles, useTheme } from '@material-ui/styles';
 
 const Plot = createPlotlyComponent(Plotly);
+const useStyles = makeStyles((theme) => ({
+    card: {
+        backgroundColor: theme.palette.secondary.light
+    },
+    content: {
+        padding: '0px !important'
+    },
+    contentContainer: {
+        padding: '16px',
+        paddingBottom: 0,
+        color: '#fff'
+    },
+    fontStyle: {
+        fontWeight: 400
+    },
+    numbers: {
+        fontWeight: 800
+    }
+}));
 
 /* const status = [
     {
@@ -32,6 +52,7 @@ const Plot = createPlotlyComponent(Plotly);
 // eslint-disable-next-line react/prefer-stateless-function
 const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ureaValue }) => {
     // const [value, setValue] = React.useState('Ten');
+    const classes = useStyles();
     const xValuesline = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const xValuesArea = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     const [yValuesArea, setyValuesArea] = useState([]);
@@ -40,9 +61,9 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     // const [i, seti] = useState(0);
     // console.log(years);
     const seperatorOn = true;
-    const cost = -Math.abs((propertySize / 500) * 7756);
-    const costErr = 7756 * 0.5;
-    const ongoingCost = -Math.abs((propertySize / 500) * 172);
+    const cost = -Math.round(Math.abs((propertySize / 500) * 7756));
+    const costErr = Math.round(7756 * 0.5);
+    const ongoingCost = -Math.round(Math.abs((propertySize / 500) * 172));
     const ureaApplied = 65;
     const additionalYield = 0.5;
     const hayPrice = 200;
@@ -125,8 +146,8 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         y: yValuesArea,
         fill: 'tozerox',
         legendgroup: 'group1',
-        fillcolor: 'rgba(0,100,80,0.2)',
-        line: { color: 'transparent' },
+        fillcolor: 'rgba(160,79,0,0.2)',
+        line: { color: 'transparent', shape: 'spline', smoothing: 1.3 },
         name: 'Return on Investment',
         showlegend: false,
         type: 'scatter'
@@ -147,11 +168,12 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     const trace4 = {
         x: xValuesline,
         y: yValuesLine,
-        line: { color: 'rgb(0,100,80)' },
+        line: { color: theme.palette.secondary.dark, shape: 'spline', smoothing: 1.3 },
         mode: 'lines+markers',
         name: 'Return on Investment',
         legendgroup: 'group1',
-        type: 'scatter'
+        type: 'scatter',
+        showlegend: false
     };
 
     const trace5 = {
@@ -165,14 +187,14 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     };
     const space = ' - ';
     const chartLayout = {
-        paper_bgcolor: 'rgb(255,255,255)',
-        plot_bgcolor: 'rgb(255,255,255)',
+        paper_bgcolor: theme.palette.secondary.light,
+        plot_bgcolor: theme.palette.secondary.light,
         autosize: true,
         groupclick: true,
         showlegend: true,
         // automargin: true,
-        legend: { orientation: 'h', xanchor: 'center', x: 0.5, y: 1.2, font: { color: grey500 } },
-        margin: { l: 45, r: 10, t: 0, b: 90 },
+        // legend: { orientation: 'h', xanchor: 'center', x: 0.5, y: 1.2, font: { color: grey500 } },
+        margin: { l: 48, r: 15, t: 20, b: 100 },
         xaxis: {
             gridcolor: 'rgb(229,229,229)',
             range: [0, 9],
@@ -183,7 +205,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             ticks: 'outside',
             zeroline: true,
             zerolinecolor: '#969696',
-            zerolinewidth: 4,
+            zerolinewidth: 3,
             tickmode: 'array',
             tickfont: { family: 'Arial', size: 14 },
             tickangle: 90,
@@ -202,7 +224,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             ]
         },
         yaxis: {
-            gridcolor: grey200,
+            gridcolor: grey500,
             showgrid: true,
             showline: true,
             showticklabels: true,
@@ -228,81 +250,117 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             {isLoading ? (
                 <SkeletonTotalGrowthBarChart />
             ) : (
-                <MainCard>
-                    <Grid container spacing={0}>
-                        <Grid item xs={12}>
-                            <Grid container alignItems="center" justifyContent="space-between">
-                                <Grid item>
-                                    <Grid container direction="column" spacing={1}>
-                                        <Grid item>
-                                            <Typography variant="h3">
-                                                <NumberFormat
-                                                    value={yValuesLine[9]}
-                                                    displayType="text"
-                                                    thousandSeparator={seperatorOn}
-                                                    prefix="$"
-                                                />
-                                                <Typography varient="subtitle1">Ten Year Return on Investment</Typography>
-                                            </Typography>
-                                            <Typography variant="subtitle2">
-                                                By Spreading additional urea in wet years over <b>{areaValue}Ha</b> at
-                                                <b> ${ureaValue} </b>per tonne and assuming a grain price of <b>${grainValue} </b>per tonne.
-                                            </Typography>
-                                            <Typography variant="subtitle2">
-                                                Initial costs for the soil probes and weather stations is
-                                                <b>
-                                                    <NumberFormat
-                                                        value={cost}
-                                                        displayType="text"
-                                                        thousandSeparator={seperatorOn}
-                                                        prefix=" $"
-                                                        suffix=" "
-                                                        allowNegative={!seperatorOn}
-                                                    />
-                                                </b>
-                                                and the ongoing costs per year for the technology is
-                                                <b>
-                                                    <NumberFormat
-                                                        value={ongoingCost}
-                                                        displayType="text"
-                                                        thousandSeparator={seperatorOn}
-                                                        prefix=" $"
-                                                        suffix=" "
-                                                        allowNegative={!seperatorOn}
-                                                    />
-                                                </b>
-                                            </Typography>
-                                        </Grid>
+                <Card className={classes.card}>
+                    <CardContent className={classes.content}>
+                        <Grid container className={classes.contentContainer}>
+                            <Grid item xs={12}>
+                                <Grid container alignItems="center" justifyContent="space-between">
+                                    <Grid item>
+                                        <Typography variant="h3" sx={{ color: theme.palette.secondary.dark }}>
+                                            Ten Year Return on Investment
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography variant="h3" sx={{ color: theme.palette.grey[800] }}>
+                                            <NumberFormat
+                                                value={yValuesLine[9]}
+                                                displayType="text"
+                                                thousandSeparator={seperatorOn}
+                                                prefix="$"
+                                            />
+                                        </Typography>
                                     </Grid>
                                 </Grid>
-                                {/* <Grid item>
-                                    <TextField
-                                        id="standard-select-currency"
-                                        select
-                                        value={value}
-                                        onChange={(e) => setValue(e.target.value)}
-                                    >
-                                        {status.map((option) => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                </Grid> */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
+                                    By Spreading additional urea in wet years over
+                                    <b>
+                                        <NumberFormat
+                                            value={areaValue}
+                                            displayType="text"
+                                            thousandSeparator={seperatorOn}
+                                            prefix=" "
+                                            suffix="Ha "
+                                            allowNegative={!seperatorOn}
+                                        />
+                                    </b>
+                                    at
+                                    <b>
+                                        <NumberFormat
+                                            value={ureaValue}
+                                            displayType="text"
+                                            thousandSeparator={seperatorOn}
+                                            prefix=" $"
+                                            suffix=" "
+                                            allowNegative={!seperatorOn}
+                                        />
+                                    </b>
+                                    per tonne and assuming a grain price of
+                                    <b>
+                                        <NumberFormat
+                                            value={grainValue}
+                                            displayType="text"
+                                            thousandSeparator={seperatorOn}
+                                            prefix=" $"
+                                            suffix=" "
+                                            allowNegative={!seperatorOn}
+                                        />
+                                    </b>
+                                    per tonne.
+                                </Typography>
+                                <Typography variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
+                                    Initial costs for the soil probes and weather stations is
+                                    <b>
+                                        <NumberFormat
+                                            value={cost}
+                                            displayType="text"
+                                            thousandSeparator={seperatorOn}
+                                            prefix=" $"
+                                            suffix=" "
+                                            allowNegative={!seperatorOn}
+                                        />
+                                    </b>
+                                    and the ongoing costs per year for the technology is
+                                    <b>
+                                        <NumberFormat
+                                            value={ongoingCost}
+                                            displayType="text"
+                                            thousandSeparator={seperatorOn}
+                                            prefix=" $"
+                                            suffix=" "
+                                            allowNegative={!seperatorOn}
+                                        />
+                                    </b>
+                                </Typography>
+                            </Grid>
+                            {/* <Grid item>
+                                <TextField
+                                    id="standard-select-currency"
+                                    select
+                                    value={value}
+                                    onChange={(e) => setValue(e.target.value)}
+                                >
+                                    {status.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid> */}
+                            <Grid item xs={12}>
+                                <div ref={ref} style={{ display: 'flex', height: '100%' }}>
+                                    <Plot
+                                        data={[trace1, trace4]}
+                                        useResizeHandler
+                                        layout={chartLayout}
+                                        style={{ width: '100%', height: '100%' }}
+                                    />
+                                </div>
                             </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <div ref={ref} style={{ display: 'flex', height: '100%' }}>
-                                <Plot
-                                    data={[trace1, trace4]}
-                                    useResizeHandler
-                                    layout={chartLayout}
-                                    style={{ width: '100%', height: '100%' }}
-                                />
-                            </div>
-                        </Grid>
-                    </Grid>
-                </MainCard>
+                    </CardContent>
+                </Card>
             )}
         </div>
     );
