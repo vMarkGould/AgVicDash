@@ -1,22 +1,15 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // material-ui
 import { makeStyles, useTheme } from '@material-ui/styles';
-import { Avatar, Grid, Typography, FormControlLabel, Switch } from '@material-ui/core';
+import { Grid, Typography, FormControlLabel, Switch } from '@material-ui/core';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SkeletonEarningCard from 'ui-component/cards/Skeleton/EarningCard';
 
 // assets
-import EarningIcon from 'assets/images/icons/earning.svg';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import GetAppTwoToneIcon from '@material-ui/icons/GetAppOutlined';
-import FileCopyTwoToneIcon from '@material-ui/icons/FileCopyOutlined';
-import PictureAsPdfTwoToneIcon from '@material-ui/icons/PictureAsPdfOutlined';
-import ArchiveTwoToneIcon from '@material-ui/icons/ArchiveOutlined';
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -104,15 +97,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SoilMoistureRoiTitle = ({ isLoading, isChecked, setIsChecked }) => {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const theme = useTheme();
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     return (
         <>
@@ -123,7 +108,7 @@ const SoilMoistureRoiTitle = ({ isLoading, isChecked, setIsChecked }) => {
                     <Grid container direction="column">
                         <Grid item>
                             <Grid container justifyContent="space-between">
-                                <Typography variant="h3" sx={{ color: theme.palette.secondary.dark }}>
+                                <Typography component="div" variant="h3" sx={{ color: theme.palette.secondary.dark }}>
                                     Welcome to the soil moisture probe Return on investment calculator
                                 </Typography>
                             </Grid>
@@ -131,7 +116,7 @@ const SoilMoistureRoiTitle = ({ isLoading, isChecked, setIsChecked }) => {
                         <Grid item>
                             <Grid container alignItems="center">
                                 <Grid item>
-                                    <Typography variant="subtitle1" sx={{ width: 1, p: 1, color: theme.palette.grey[500] }}>
+                                    <Typography component="div" variant="subtitle1" sx={{ width: 1, p: 1, color: theme.palette.grey[500] }}>
                                         This calculator can be used as a guide to look at the possible return on investment for soil probes
                                         in a broadacre cropping farming system, the assumtions for this model are based on the data captured
                                         from a case study from the Victorian On-Farm Internet of things Trial.
