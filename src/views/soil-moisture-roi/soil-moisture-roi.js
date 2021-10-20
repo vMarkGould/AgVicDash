@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // material-ui
-import { Typography, Grid, Card, Collapse, Switch, FormControlLabel } from '@material-ui/core';
+import { Grid, Collapse } from '@material-ui/core';
 import { gridSpacing } from 'store/constant';
 
 // import plotly

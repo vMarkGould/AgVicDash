@@ -1,18 +1,29 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import Plotly from 'plotly.js-basic-dist';
 import NumberFormat from 'react-number-format';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import { useResizeDetector } from 'react-resize-detector';
-import { Grid, Typography, Card, CardContent, FormControlLabel, Switch, Tooltip } from '@material-ui/core';
+import {
+    Grid,
+    Typography,
+    Card,
+    CardContent,
+    FormControlLabel,
+    Switch,
+    Tooltip,
+    Collapse,
+    FormControl,
+    NativeSelect,
+    InputLabel
+} from '@material-ui/core';
 // MenuItem, TextField,
 
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
-import MainCard from 'ui-component/cards/MainCard';
-import PropTypes from 'prop-types';
-import { gridSpacing } from 'store/constant';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { Finance } from 'financejs';
+import GetNPV from './npv';
 
 const Plot = createPlotlyComponent(Plotly);
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +70,8 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     const xValuesArea = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     const [yValuesArea, setyValuesArea] = useState([]);
     const [yValuesLine, setyValuesLine] = useState([]);
+    const [yNpvValuesArea, setyNpvValuesArea] = useState([]);
+    const [yNpvValuesLine, setyNpvValuesLine] = useState([]);
     // const [trace1datax, setTrace1datax] = useState([]);
     // const [i, seti] = useState(0);
     // console.log(years);
@@ -76,38 +89,61 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     const netGain = extraIncomeWet - extraCost;
     // console.log(netGain);
     const totalNetGain = netGain * areaValue;
+    const [discountRate, setDiscountRate] = useState(6);
     // console.log('total net gain');
     // console.log(totalNetGain);
     // use switch or lookup table function to calculate the Y Values
     useEffect(() => {
         const newArr = [];
+        const npvArr = [];
+        const netArr = [];
         years.map((year, index) => {
-            console.log(years);
             switch (year.value) {
                 case 'wet':
                     if (index === 0) {
+                        netArr[index] = 0;
                         newArr[index] = Math.round(cost + totalNetGain);
+                        npvArr[index] = Math.round(cost);
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost + totalNetGain);
+                        netArr[index] = Math.round(ongoingCost + totalNetGain);
+                        // const netGain = netArr.reduce((prevValue, currValue, index) => prevValue + currValue, 0);
+                        const npvGain = GetNPV(discountRate, 0, netArr);
+                        npvArr[index] = Math.round(cost + npvGain);
                     }
                     return null;
                 case 'dry':
                     if (index === 0) {
+                        netArr[index] = 0;
                         newArr[index] = Math.round(cost);
+                        npvArr[index] = Math.round(cost);
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
+                        netArr[index] = Math.round(ongoingCost);
+                        // const netGain = netArr.reduce((prevValue, currValue, index) => prevValue + currValue, 0);
+                        // const finance = new Finance();
+                        const npvGain = GetNPV(discountRate, 0, netArr);
+                        npvArr[index] = Math.round(cost + npvGain);
                     }
                     return null;
                 default:
                     if (index === 0) {
                         newArr[index] = Math.round(cost);
+                        npvArr[index] = Math.round(cost);
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
+                        netArr[index] = Math.round(ongoingCost);
+                        // const netGain = netArr.reduce((prevValue, currValue, index) => prevValue + currValue, 0);
+                        // const finance = new Finance();
+                        const npvGain = GetNPV(discountRate, 0, netArr);
+                        npvArr[index] = Math.round(cost + npvGain);
                     }
                     return null;
             }
         });
-        // console.log(newArr);
+        console.log(npvArr);
+        console.log(netArr);
+        console.log(newArr);
         setyValuesLine(newArr);
         setyValuesArea([
             newArr[0] + costErr,
@@ -131,13 +167,39 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             newArr[1] - costErr,
             newArr[0] - costErr
         ]);
-        console.log('y Values Area');
-        console.log(yValuesArea);
-    }, [areaValue, years, propertySize, grainValue, ureaValue]);
+        setyNpvValuesLine(npvArr);
+        setyNpvValuesArea([
+            npvArr[0] + costErr,
+            npvArr[1] + costErr,
+            npvArr[2] + costErr,
+            npvArr[3] + costErr,
+            npvArr[4] + costErr,
+            npvArr[5] + costErr,
+            npvArr[6] + costErr,
+            npvArr[7] + costErr,
+            npvArr[8] + costErr,
+            npvArr[9] + costErr,
+            npvArr[9] - costErr,
+            npvArr[8] - costErr,
+            npvArr[7] - costErr,
+            npvArr[6] - costErr,
+            npvArr[5] - costErr,
+            npvArr[4] - costErr,
+            npvArr[3] - costErr,
+            npvArr[2] - costErr,
+            npvArr[1] - costErr,
+            npvArr[0] - costErr
+        ]);
+        console.log('y Values Line');
+        console.log(yValuesLine);
+        console.log('Y NPV Values');
+        console.log(yNpvValuesLine);
+        console.log(yNpvValuesArea);
+    }, [areaValue, years, propertySize, grainValue, ureaValue, discountRate]);
 
     const theme = useTheme();
     // const { primary } = theme.palette.text;
-    const grey200 = theme.palette.grey[200];
+    // const grey200 = theme.palette.grey[200];
     // const primary200 = theme.palette.primary[200];
     // const primaryDark = theme.palette.primary.dark;
     // const secondaryMain = theme.palette.secondary.main;
@@ -157,10 +219,10 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
 
     const trace2 = {
         x: xValuesArea,
-        y: [5.5, 3, 5.5, 8, 6, 3, 8, 5, 6, 5.5, 4.75, 5, 4, 7, 2, 4, 7, 4.4, 2, 4.5],
+        y: yNpvValuesArea,
         fill: 'tozerox',
-        fillcolor: 'rgba(0,176,246,0.2)',
-        line: { color: 'transparent' },
+        fillcolor: 'rgb(227,237,235,0.2)',
+        line: { color: 'transparent', shape: 'spline', smoothing: 1.3 },
         name: 'Premium',
         showlegend: false,
         legendgroup: 'group2',
@@ -180,8 +242,8 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
 
     const trace5 = {
         x: xValuesline,
-        y: [5, 2.5, 5, 7.5, 5, 2.5, 7.5, 4.5, 5.5, 5],
-        line: { color: 'rgb(0,176,246)' },
+        y: yNpvValuesLine,
+        line: { color: theme.palette.primary.dark, shape: 'spline', smoothing: 1.3 },
         mode: 'lines',
         name: 'Premium',
         legendgroup: 'group2',
@@ -247,6 +309,62 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     PlotlyChart.propTypes = {
         areaValue: PropTypes.number
     };
+    const menuOptions = [
+        {
+            id: 1,
+            name: '1%',
+            value: 1
+        },
+        {
+            id: 2,
+            name: '2%',
+            value: 2
+        },
+        {
+            id: 3,
+            name: '3%',
+            value: 3
+        },
+        {
+            id: 4,
+            name: '4%',
+            value: 4
+        },
+        {
+            id: 5,
+            name: '5%',
+            value: 5
+        },
+        {
+            id: 6,
+            name: '6%',
+            value: 6
+        },
+        {
+            id: 7,
+            name: '7%',
+            value: 7
+        },
+        {
+            id: 8,
+            name: '8%',
+            value: 8
+        },
+        {
+            id: 9,
+            name: '9%',
+            value: 9
+        },
+        {
+            id: 10,
+            name: '10%',
+            value: 10
+        }
+    ];
+    const updateFieldChanged = () => (e) => {
+        console.log(e.target.value);
+        setDiscountRate(e.target.value);
+    };
 
     return (
         <div>
@@ -275,7 +393,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={10}>
+                            <Grid item xs={12}>
                                 <Typography variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
                                     By Spreading additional urea in wet years over
                                     <b>
@@ -351,7 +469,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                     ))}
                                 </TextField>
                             </Grid> */}
-                            <Grid item xs={2}>
+                            <Grid item>
                                 <Tooltip title="Net Present Value">
                                     <FormControlLabel
                                         sx={{ color: theme.palette.secondary.dark }}
@@ -367,14 +485,46 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                     />
                                 </Tooltip>
                             </Grid>
+                            <Grid item>
+                                <Collapse in={isNPVChecked}>
+                                    <Tooltip title="Discount Rate">
+                                        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }} className={classes.formControl}>
+                                            <InputLabel className={classes.inputLabel}>Discount Rate</InputLabel>
+                                            <NativeSelect
+                                                label="Discount Rate"
+                                                name="Discount Rate"
+                                                value={discountRate}
+                                                className={classes.selectMenu}
+                                                native="true"
+                                                onChange={updateFieldChanged()}
+                                            >
+                                                {menuOptions.map((options, index) => (
+                                                    <option key={index} className={classes.menuItem} value={options.value}>
+                                                        {options.name}
+                                                    </option>
+                                                ))}
+                                            </NativeSelect>
+                                        </FormControl>
+                                    </Tooltip>
+                                </Collapse>
+                            </Grid>
                             <Grid item xs={12}>
                                 <div ref={ref} style={{ display: 'flex', height: '100%' }}>
-                                    <Plot
-                                        data={[trace1, trace4]}
-                                        useResizeHandler
-                                        layout={chartLayout}
-                                        style={{ width: '100%', height: '100%' }}
-                                    />
+                                    {isNPVChecked ? (
+                                        <Plot
+                                            data={[trace1, trace2, trace4, trace5]}
+                                            useResizeHandler
+                                            layout={chartLayout}
+                                            style={{ width: '100%', height: '100%' }}
+                                        />
+                                    ) : (
+                                        <Plot
+                                            data={[trace1, trace4]}
+                                            useResizeHandler
+                                            layout={chartLayout}
+                                            style={{ width: '100%', height: '100%' }}
+                                        />
+                                    )}
                                 </div>
                             </Grid>
                         </Grid>
