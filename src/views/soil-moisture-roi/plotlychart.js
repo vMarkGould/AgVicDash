@@ -107,7 +107,6 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost + totalNetGain);
                         netArr[index] = Math.round(ongoingCost + totalNetGain);
-                        // const netGain = netArr.reduce((prevValue, currValue, index) => prevValue + currValue, 0);
                         const npvGain = GetNPV(discountRate, 0, netArr);
                         npvArr[index] = Math.round(cost + npvGain);
                     }
@@ -120,8 +119,6 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
                         netArr[index] = Math.round(ongoingCost);
-                        // const netGain = netArr.reduce((prevValue, currValue, index) => prevValue + currValue, 0);
-                        // const finance = new Finance();
                         const npvGain = GetNPV(discountRate, 0, netArr);
                         npvArr[index] = Math.round(cost + npvGain);
                     }
@@ -133,17 +130,12 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost);
                         netArr[index] = Math.round(ongoingCost);
-                        // const netGain = netArr.reduce((prevValue, currValue, index) => prevValue + currValue, 0);
-                        // const finance = new Finance();
                         const npvGain = GetNPV(discountRate, 0, netArr);
                         npvArr[index] = Math.round(cost + npvGain);
                     }
                     return null;
             }
         });
-        console.log(npvArr);
-        console.log(netArr);
-        console.log(newArr);
         setyValuesLine(newArr);
         setyValuesArea([
             newArr[0] + costErr,
@@ -198,12 +190,6 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     }, [areaValue, years, propertySize, grainValue, ureaValue, discountRate]);
 
     const theme = useTheme();
-    // const { primary } = theme.palette.text;
-    // const grey200 = theme.palette.grey[200];
-    // const primary200 = theme.palette.primary[200];
-    // const primaryDark = theme.palette.primary.dark;
-    // const secondaryMain = theme.palette.secondary.main;
-    // const secondaryLight = theme.palette.secondary.light;
     const grey500 = theme.palette.grey[500];
     const trace1 = {
         x: xValuesArea,
@@ -234,7 +220,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         y: yValuesLine,
         line: { color: theme.palette.secondary.dark, shape: 'spline', smoothing: 1.3 },
         mode: 'lines+markers',
-        name: 'Return on Investment',
+        name: 'Cumulative Total',
         legendgroup: 'group1',
         type: 'scatter',
         showlegend: false
@@ -243,10 +229,11 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     const trace5 = {
         x: xValuesline,
         y: yNpvValuesLine,
-        line: { color: theme.palette.primary.dark, shape: 'spline', smoothing: 1.3 },
-        mode: 'lines',
-        name: 'Premium',
+        line: { color: theme.palette.primary.main, shape: 'spline', smoothing: 1.3 },
+        mode: 'lines+markers',
+        name: 'Net Present Value',
         legendgroup: 'group2',
+        showlegend: false,
         type: 'scatter'
     };
     const space = ' - ';
@@ -372,163 +359,161 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                 <SkeletonTotalGrowthBarChart />
             ) : (
                 <Card className={classes.card}>
-                    <CardContent className={classes.content}>
-                        <Grid container className={classes.contentContainer}>
-                            <Grid item xs={12}>
-                                <Grid container alignItems="center" justifyContent="space-between">
-                                    <Grid item>
-                                        <Typography variant="h3" sx={{ color: theme.palette.secondary.dark }}>
-                                            Ten Year Return on Investment
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="h3" sx={{ color: theme.palette.grey[800] }}>
-                                            <NumberFormat
-                                                value={yValuesLine[9]}
-                                                displayType="text"
-                                                thousandSeparator={seperatorOn}
-                                                prefix="$"
-                                            />
-                                        </Typography>
-                                    </Grid>
+                    <Grid container className={classes.contentContainer}>
+                        <Grid item xs={12}>
+                            <Grid container alignItems="center" justifyContent="space-between">
+                                <Grid item>
+                                    <Typography component="div" variant="h3" sx={{ color: theme.palette.secondary.dark }}>
+                                        Ten Year Return on Investment
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography component="div" variant="h3" sx={{ color: theme.palette.grey[800] }}>
+                                        <NumberFormat
+                                            value={yValuesLine[9]}
+                                            displayType="text"
+                                            thousandSeparator={seperatorOn}
+                                            prefix="$"
+                                        />
+                                    </Typography>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
-                                    By Spreading additional urea in wet years over
-                                    <b>
-                                        <NumberFormat
-                                            value={areaValue}
-                                            displayType="text"
-                                            thousandSeparator={seperatorOn}
-                                            prefix=" "
-                                            suffix="Ha "
-                                            allowNegative={!seperatorOn}
-                                        />
-                                    </b>
-                                    at
-                                    <b>
-                                        <NumberFormat
-                                            value={ureaValue}
-                                            displayType="text"
-                                            thousandSeparator={seperatorOn}
-                                            prefix=" $"
-                                            suffix=" "
-                                            allowNegative={!seperatorOn}
-                                        />
-                                    </b>
-                                    per tonne and assuming a grain price of
-                                    <b>
-                                        <NumberFormat
-                                            value={grainValue}
-                                            displayType="text"
-                                            thousandSeparator={seperatorOn}
-                                            prefix=" $"
-                                            suffix=" "
-                                            allowNegative={!seperatorOn}
-                                        />
-                                    </b>
-                                    per tonne.
-                                </Typography>
-                                <Typography variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
-                                    Initial costs for the soil probes and weather stations is
-                                    <b>
-                                        <NumberFormat
-                                            value={cost}
-                                            displayType="text"
-                                            thousandSeparator={seperatorOn}
-                                            prefix=" $"
-                                            suffix=" "
-                                            allowNegative={!seperatorOn}
-                                        />
-                                    </b>
-                                    and the ongoing costs per year for the technology is
-                                    <b>
-                                        <NumberFormat
-                                            value={ongoingCost}
-                                            displayType="text"
-                                            thousandSeparator={seperatorOn}
-                                            prefix=" $"
-                                            suffix=" "
-                                            allowNegative={!seperatorOn}
-                                        />
-                                    </b>
-                                </Typography>
-                            </Grid>
-                            {/* <Grid item>
-                                <TextField
-                                    id="standard-select-currency"
-                                    select
-                                    value={value}
-                                    onChange={(e) => setValue(e.target.value)}
-                                >
-                                    {status.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid> */}
-                            <Grid item>
-                                <Tooltip title="Net Present Value">
-                                    <FormControlLabel
-                                        sx={{ color: theme.palette.secondary.dark }}
-                                        control={
-                                            <Switch
-                                                checked={isNPVChecked}
-                                                onChange={() => {
-                                                    setIsNPVChecked((prev) => !prev);
-                                                }}
-                                            />
-                                        }
-                                        label="NPV"
-                                    />
-                                </Tooltip>
-                            </Grid>
-                            <Grid item>
-                                <Collapse in={isNPVChecked}>
-                                    <Tooltip title="Discount Rate">
-                                        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }} className={classes.formControl}>
-                                            <InputLabel className={classes.inputLabel}>Discount Rate</InputLabel>
-                                            <NativeSelect
-                                                label="Discount Rate"
-                                                name="Discount Rate"
-                                                value={discountRate}
-                                                className={classes.selectMenu}
-                                                native="true"
-                                                onChange={updateFieldChanged()}
-                                            >
-                                                {menuOptions.map((options, index) => (
-                                                    <option key={index} className={classes.menuItem} value={options.value}>
-                                                        {options.name}
-                                                    </option>
-                                                ))}
-                                            </NativeSelect>
-                                        </FormControl>
-                                    </Tooltip>
-                                </Collapse>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <div ref={ref} style={{ display: 'flex', height: '100%' }}>
-                                    {isNPVChecked ? (
-                                        <Plot
-                                            data={[trace1, trace2, trace4, trace5]}
-                                            useResizeHandler
-                                            layout={chartLayout}
-                                            style={{ width: '100%', height: '100%' }}
-                                        />
-                                    ) : (
-                                        <Plot
-                                            data={[trace1, trace4]}
-                                            useResizeHandler
-                                            layout={chartLayout}
-                                            style={{ width: '100%', height: '100%' }}
-                                        />
-                                    )}
-                                </div>
-                            </Grid>
                         </Grid>
-                    </CardContent>
+                        <Grid item xs={12}>
+                            <Typography component="div" variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
+                                By Spreading additional urea in wet years over
+                                <b>
+                                    <NumberFormat
+                                        value={areaValue}
+                                        displayType="text"
+                                        thousandSeparator={seperatorOn}
+                                        prefix=" "
+                                        suffix="Ha "
+                                        allowNegative={!seperatorOn}
+                                    />
+                                </b>
+                                at
+                                <b>
+                                    <NumberFormat
+                                        value={ureaValue}
+                                        displayType="text"
+                                        thousandSeparator={seperatorOn}
+                                        prefix=" $"
+                                        suffix=" "
+                                        allowNegative={!seperatorOn}
+                                    />
+                                </b>
+                                per tonne and assuming a grain price of
+                                <b>
+                                    <NumberFormat
+                                        value={grainValue}
+                                        displayType="text"
+                                        thousandSeparator={seperatorOn}
+                                        prefix=" $"
+                                        suffix=" "
+                                        allowNegative={!seperatorOn}
+                                    />
+                                </b>
+                                per tonne.
+                            </Typography>
+                            <Typography component="div" variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
+                                Initial costs for the soil probes and weather stations is
+                                <b>
+                                    <NumberFormat
+                                        value={cost}
+                                        displayType="text"
+                                        thousandSeparator={seperatorOn}
+                                        prefix=" $"
+                                        suffix=" "
+                                        allowNegative={!seperatorOn}
+                                    />
+                                </b>
+                                and the ongoing costs per year for the technology is
+                                <b>
+                                    <NumberFormat
+                                        value={ongoingCost}
+                                        displayType="text"
+                                        thousandSeparator={seperatorOn}
+                                        prefix=" $"
+                                        suffix=" "
+                                        allowNegative={!seperatorOn}
+                                    />
+                                </b>
+                            </Typography>
+                        </Grid>
+                        {/* <Grid item>
+                            <TextField
+                                id="standard-select-currency"
+                                select
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                            >
+                                {status.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </Grid> */}
+                        <Grid item>
+                            <Tooltip title="Net Present Value">
+                                <FormControlLabel
+                                    sx={{ color: theme.palette.secondary.dark }}
+                                    control={
+                                        <Switch
+                                            checked={isNPVChecked}
+                                            onChange={() => {
+                                                setIsNPVChecked((prev) => !prev);
+                                            }}
+                                        />
+                                    }
+                                    label="NPV"
+                                />
+                            </Tooltip>
+                        </Grid>
+                        <Grid item>
+                            <Collapse in={isNPVChecked}>
+                                <Tooltip title="Discount Rate">
+                                    <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }} className={classes.formControl}>
+                                        <InputLabel className={classes.inputLabel}>Discount Rate</InputLabel>
+                                        <NativeSelect
+                                            label="Discount Rate"
+                                            name="Discount Rate"
+                                            value={discountRate}
+                                            className={classes.selectMenu}
+                                            native="true"
+                                            onChange={updateFieldChanged()}
+                                        >
+                                            {menuOptions.map((options, index) => (
+                                                <option key={index} className={classes.menuItem} value={options.value}>
+                                                    {options.name}
+                                                </option>
+                                            ))}
+                                        </NativeSelect>
+                                    </FormControl>
+                                </Tooltip>
+                            </Collapse>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div ref={ref} style={{ display: 'flex', height: '100%' }}>
+                                {isNPVChecked ? (
+                                    <Plot
+                                        data={[trace4, trace2, trace1, trace5]}
+                                        useResizeHandler
+                                        layout={chartLayout}
+                                        style={{ width: '100%', height: '100%' }}
+                                    />
+                                ) : (
+                                    <Plot
+                                        data={[trace4, trace1]}
+                                        useResizeHandler
+                                        layout={chartLayout}
+                                        style={{ width: '100%', height: '100%' }}
+                                    />
+                                )}
+                            </div>
+                        </Grid>
+                    </Grid>
                 </Card>
             )}
         </div>

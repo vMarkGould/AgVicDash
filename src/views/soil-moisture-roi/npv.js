@@ -8,7 +8,7 @@ const cashFlows = [];
 const rate = 0;
 const initialCost = 0;
 
-export function GetNPV(rate, initialCost, cashFlows) {
+function GetNPV(rate, initialCost, cashFlows) {
     // prettier-ignore
     return cashFlows.reduce(
         (accumulator, currentValue, index) => accumulator + currentValue / ( (rate / 100 + 1) ** (index + 1) ),
