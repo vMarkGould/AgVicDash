@@ -5,7 +5,7 @@ import { useTheme } from '@material-ui/styles';
 import { AppBar, Tabs, Tab, Typography, Box, Card } from '@material-ui/core';
 import MainCard from 'ui-component/cards/MainCard';
 import SoilMoistureRoi from './soil-moisture-roi';
-import CustomizedTimeline from './soil-prob-decisions'
+import CustomizedTimeline from './soil-prob-decisions';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -71,7 +71,7 @@ export default function FullWidthTabs() {
                     <SoilMoistureRoi />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    Soil Probe Decisions
+                    <CustomizedTimeline />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three
