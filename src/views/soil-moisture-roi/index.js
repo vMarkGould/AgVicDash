@@ -5,6 +5,7 @@ import { useTheme } from '@material-ui/styles';
 import { AppBar, Tabs, Tab, Typography, Box, Card } from '@material-ui/core';
 import MainCard from 'ui-component/cards/MainCard';
 import SoilMoistureRoi from './soil-moisture-roi';
+import CustomizedTimeline from './soil-prob-decisions'
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -61,7 +62,7 @@ export default function FullWidthTabs() {
                     aria-label="full width tabs example"
                 >
                     <Tab label="Soil Moisture ROI Calculator" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
+                    <Tab label="Soil Probe Decisions" {...a11yProps(1)} />
                     <Tab label="Item Three" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
@@ -70,7 +71,7 @@ export default function FullWidthTabs() {
                     <SoilMoistureRoi />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    Item Two
+                    Soil Probe Decisions
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three
