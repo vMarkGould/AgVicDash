@@ -1,35 +1,30 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
 import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
-// import Agriculture from '@material-ui/icons/Agriculture';
-// import WbSunny from '@material-ui/icons/WbSunny';
-// import Grain from '@material-ui/icons/Grain';
-// import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-// import HotelIcon from '@material-ui/icons/Hotel';
-// import RepeatIcon from '@material-ui/icons/Repeat';
+import TimelineDot from '@material-ui/lab/TimelineDot';
+import Agriculture from '@material-ui/icons/Agriculture';
+import WbSunny from '@material-ui/icons/WbSunny';
+import Grain from '@material-ui/icons/Grain';
+import LaptopMacIcon from '@material-ui/icons/LaptopMac';
+import HotelIcon from '@material-ui/icons/Hotel';
+import RepeatIcon from '@material-ui/icons/Repeat';
 import { Typography } from '@material-ui/core';
-// import SvgIcon from '@material-ui/core/SvgIcon';
-// import crop from './crop.svg';
-// import { makeStyles, useTheme } from '@material-ui/styles';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import crop from './crop.svg';
+import { makeStyles, useTheme } from '@material-ui/styles';
 // import HarvesterIcon from './combine-harvester.svg';
-// import { ReactComponent as SingleWheat } from './single-wheat.svg';
+import { ReactComponent as SingleWheat } from './single-wheat.svg';
 import seed from './images/seed.jpg';
-import tillering from './images/tillering.jpg';
-import stemElongation from './images/stem-elongation.jpg';
-import flowering from './images/flowering.jpg';
-import sowingData from './soil-decisions/sowing-data';
-import SwipeableTextMobileStepper from './swipable-view';
 
 /* const Wheat = () => {
     const theme = useTheme();
     return SingleWheat;
 }; */
 
-/*
 const CropIcon = () => {
     const theme = useTheme();
     return (
@@ -82,9 +77,7 @@ const HarvesterIcon = () => {
         </svg>
     );
 };
-*/
 
-/*
 const useStyles = makeStyles((theme) => ({
     dot: {
         color: theme.palette.primary.light
@@ -104,35 +97,40 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 800
     }
 }));
-*/
 
 export default function CustomizedTimeline() {
-    // const theme = useTheme();
-    // const classes = useStyles();
-    const [sowData] = useState(sowingData);
-    console.log(sowData[0]);
+    const theme = useTheme();
+    const classes = useStyles();
     return (
         <Timeline position="alternate">
             <TimelineItem>
                 <TimelineOppositeContent sx={{ m: 'auto 0' }} align="right" variant="body2" color="text.secondary">
-                    Sowing
+                    Summer
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector color="primary" />
-                    <img src={seed} alt="Seed" width="40" />
+                    <TimelineDot color="info">
+                        <WbSunny color="warning" fontSize="large" />
+                        <img src={seed} alt="Seed" width="40" />
+                    </TimelineDot>
                     <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <SwipeableTextMobileStepper swipeData={sowData} />
+                    <Typography variant="h6" component="span">
+                        Evaluate the summer rains, and monitor weeds affect on reduction in soil moisture
+                    </Typography>
+                    <Typography>Add something else</Typography>
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
                 <TimelineOppositeContent sx={{ m: 'auto 0' }} variant="body2" color="text.secondary">
-                    Tillering
+                    Autumn
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector />
-                    <img src={tillering} alt="tillering" width="40" />
+                    <TimelineDot color="primary">
+                        <Grain color="warning" fontSize="large" />
+                    </TimelineDot>
                     <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
@@ -145,11 +143,13 @@ export default function CustomizedTimeline() {
             </TimelineItem>
             <TimelineItem>
                 <TimelineOppositeContent sx={{ m: 'auto 0' }} variant="body2" color="text.secondary">
-                    Stem Elongation
+                    Winter
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector />
-                    <img src={stemElongation} alt="Stem Elongation" width="40" />
+                    <TimelineDot color="warning">
+                        <Agriculture color="primary" fontSize="large" />
+                    </TimelineDot>
                     <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
@@ -161,12 +161,11 @@ export default function CustomizedTimeline() {
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
-                <TimelineOppositeContent sx={{ m: 'auto 0' }} variant="body2" color="text.secondary">
-                    Flowering
-                </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector />
-                    <img src={flowering} alt="Flowering" width="40" />
+                    <TimelineDot color="secondary">
+                        <SingleWheat />
+                    </TimelineDot>
                     <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
