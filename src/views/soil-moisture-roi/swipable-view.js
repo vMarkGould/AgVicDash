@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@material-ui/styles';
+import { useTheme, makeStyles } from '@material-ui/styles';
 import { Box, MobileStepper, Paper, Typography, Button } from '@material-ui/core';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 import SwipeableViews from 'react-swipeable-views';
@@ -8,9 +8,17 @@ import { autoPlay } from 'react-swipeable-views-utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
+const useStyles = makeStyles((theme) => ({
+    header: {
+        color: theme.palette.primary.light
+    }
+}));
+
 function SwipeableTextMobileStepper({ swipeData }) {
     const theme = useTheme();
-    console.log(swipeData);
+    console.log(theme.palette.primary.main);
+    const classes = useStyles();
+    console.log(classes);
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = swipeData.length;
     const handleNext = () => {
@@ -35,10 +43,10 @@ function SwipeableTextMobileStepper({ swipeData }) {
                     alignItems: 'center',
                     height: 25,
                     pl: 2,
-                    bgcolor: 'background.default'
+                    bgcolor: theme.palette.primary.main
                 }}
             >
-                <Typography>{swipeData[activeStep].label}</Typography>
+                <Typography color={theme.palette.secondary.light}>{swipeData[activeStep].label}</Typography>
             </Paper>
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}

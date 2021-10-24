@@ -14,7 +14,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import { Typography } from '@material-ui/core';
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // import crop from './crop.svg';
-// import { makeStyles, useTheme } from '@material-ui/styles';
+// git import { makeStyles, useTheme } from '@material-ui/styles';
 // import HarvesterIcon from './combine-harvester.svg';
 // import { ReactComponent as SingleWheat } from './single-wheat.svg';
 import seed from './images/seed.jpg';
@@ -22,6 +22,9 @@ import tillering from './images/tillering.jpg';
 import stemElongation from './images/stem-elongation.jpg';
 import flowering from './images/flowering.jpg';
 import sowingData from './soil-decisions/sowing-data';
+import tilleringData from './soil-decisions/tillering-data';
+import stemElongationData from './soil-decisions/stem-elongation-data';
+import floweringData from './soil-decisions/flower-data';
 import SwipeableTextMobileStepper from './swipable-view';
 
 /* const Wheat = () => {
@@ -109,71 +112,58 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomizedTimeline() {
     // const theme = useTheme();
     // const classes = useStyles();
-    const [sowData] = useState(sowingData);
-    console.log(sowData[0]);
     return (
         <Timeline position="alternate">
             <TimelineItem>
-                <TimelineOppositeContent sx={{ m: 'auto 0' }} align="right" variant="body2" color="text.secondary">
-                    Sowing
-                </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector color="primary" />
                     <img src={seed} alt="Seed" width="40" />
+                    <TimelineOppositeContent sx={{ m: 'auto 0' }} align="center" variant="body2" color="text.secondary">
+                        Sowing
+                    </TimelineOppositeContent>
                     <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <SwipeableTextMobileStepper swipeData={sowData} />
+                    <SwipeableTextMobileStepper swipeData={sowingData} />
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
-                <TimelineOppositeContent sx={{ m: 'auto 0' }} variant="body2" color="text.secondary">
-                    Tillering
-                </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector />
                     <img src={tillering} alt="tillering" width="40" />
+                    <TimelineOppositeContent sx={{ m: 'auto 0' }} align="center" variant="body2" color="text.secondary">
+                        Tillering
+                    </TimelineOppositeContent>
                     <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <Typography variant="h6" component="span">
-                        Based on the residual soil moistue, decide on which crops to sow more of, if there is marge amounts of stored
-                        moisture you might decide to sow a Canola crop.
-                    </Typography>
-                    <Typography>Because it&apos;s awesome!</Typography>
+                    <SwipeableTextMobileStepper swipeData={tilleringData} />
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
-                <TimelineOppositeContent sx={{ m: 'auto 0' }} variant="body2" color="text.secondary">
-                    Stem Elongation
-                </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector />
                     <img src={stemElongation} alt="Stem Elongation" width="40" />
-                    <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
+                    <TimelineOppositeContent sx={{ m: 'auto 0' }} align="center" variant="body2" color="text.secondary">
+                        Stem Elongation
+                    </TimelineOppositeContent>
+                    <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <Typography variant="h6" component="span">
-                        Based on rainfall and is penatration into the soil, its possible to decide if the environment is right to add more
-                        fertaliser, to increase yeilds and quality of crop
-                    </Typography>
-                    <Typography>Because you need rest</Typography>
+                    <SwipeableTextMobileStepper swipeData={stemElongationData} />
                 </TimelineContent>
             </TimelineItem>
             <TimelineItem>
-                <TimelineOppositeContent sx={{ m: 'auto 0' }} variant="body2" color="text.secondary">
-                    Flowering
-                </TimelineOppositeContent>
                 <TimelineSeparator>
                     <TimelineConnector />
                     <img src={flowering} alt="Flowering" width="40" />
+                    <TimelineOppositeContent sx={{ m: 'auto 0' }} align="center" variant="body2" color="text.secondary">
+                        Flowering
+                    </TimelineOppositeContent>
                     <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <Typography variant="h6" component="span">
-                        Repeat
-                    </Typography>
-                    <Typography>Because this is the life you love!</Typography>
+                    <SwipeableTextMobileStepper swipeData={floweringData} />
                 </TimelineContent>
             </TimelineItem>
         </Timeline>
