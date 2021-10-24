@@ -8,7 +8,6 @@ import {
     Grid,
     Typography,
     Card,
-    CardContent,
     FormControlLabel,
     Switch,
     Tooltip,
@@ -22,7 +21,6 @@ import {
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
 import { makeStyles, useTheme } from '@material-ui/styles';
-import { Finance } from 'financejs';
 import GetNPV from './npv';
 
 const Plot = createPlotlyComponent(Plotly);
@@ -77,18 +75,16 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     // console.log(years);
     const seperatorOn = true;
     const cost = -Math.round(Math.abs((propertySize / 500) * 7756));
-    const costErr = Math.round(7756 * 0.5);
     const ongoingCost = -Math.round(Math.abs((propertySize / 500) * 172));
     const ureaApplied = 65;
-    const additionalYield = 0.5;
-    const hayPrice = 200;
-    const extraIncomeWet = additionalYield * grainValue;
+    // const hayPrice = 200;
+
     // console.log(extraIncomeWet);
-    const extraCost = ureaApplied * (ureaValue / 1000);
+
     // console.log(extraCost);
-    const netGain = extraIncomeWet - extraCost;
+
     // console.log(netGain);
-    const totalNetGain = netGain * areaValue;
+
     const [discountRate, setDiscountRate] = useState(6);
     // console.log('total net gain');
     // console.log(totalNetGain);
@@ -97,6 +93,12 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         const newArr = [];
         const npvArr = [];
         const netArr = [];
+        const additionalYield = 0.5;
+        const extraCost = ureaApplied * (ureaValue / 1000);
+        const extraIncomeWet = additionalYield * grainValue;
+        const netGain = extraIncomeWet - extraCost;
+        const totalNetGain = netGain * areaValue;
+        const costErr = Math.round(7756 * 0.5);
         years.map((year, index) => {
             switch (year.value) {
                 case 'wet':
@@ -182,12 +184,8 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             npvArr[1] - costErr,
             npvArr[0] - costErr
         ]);
-        console.log('y Values Line');
-        console.log(yValuesLine);
-        console.log('Y NPV Values');
-        console.log(yNpvValuesLine);
-        console.log(yNpvValuesArea);
-    }, [areaValue, years, propertySize, grainValue, ureaValue, discountRate]);
+        console.log('effect ran');
+    }, [areaValue, years, propertySize, grainValue, ureaValue, discountRate, cost, ongoingCost]);
 
     const theme = useTheme();
     const grey500 = theme.palette.grey[500];
@@ -349,7 +347,6 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
         }
     ];
     const updateFieldChanged = () => (e) => {
-        console.log(e.target.value);
         setDiscountRate(e.target.value);
     };
 
