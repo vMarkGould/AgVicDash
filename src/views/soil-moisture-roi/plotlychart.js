@@ -184,7 +184,6 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             npvArr[1] - costErr,
             npvArr[0] - costErr
         ]);
-        console.log('effect ran');
     }, [areaValue, years, propertySize, grainValue, ureaValue, discountRate, cost, ongoingCost]);
 
     const theme = useTheme();
