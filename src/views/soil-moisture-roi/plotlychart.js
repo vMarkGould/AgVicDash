@@ -286,7 +286,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             tickprefix: '$'
         }
     };
-    const { width, height, ref } = useResizeDetector({
+    const { ref } = useResizeDetector({
         // refreshMode: 'debounce',
         // refreshRate: 1000
     });

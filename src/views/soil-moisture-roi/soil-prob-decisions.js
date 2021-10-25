@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -11,7 +11,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 // import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 // import HotelIcon from '@material-ui/icons/Hotel';
 // import RepeatIcon from '@material-ui/icons/Repeat';
-import { Typography } from '@material-ui/core';
+// import { Typography } from '@material-ui/core';
 // import SvgIcon from '@material-ui/core/SvgIcon';
 // import crop from './crop.svg';
 // git import { makeStyles, useTheme } from '@material-ui/styles';
@@ -113,7 +113,7 @@ export default function CustomizedTimeline() {
     // const theme = useTheme();
     // const classes = useStyles();
     return (
-        <Timeline position="alternate">
+        <Timeline position="left">
             <TimelineItem>
                 <TimelineSeparator>
                     <TimelineConnector color="primary" />
@@ -123,7 +123,7 @@ export default function CustomizedTimeline() {
                     </TimelineOppositeContent>
                     <TimelineConnector />
                 </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
+                <TimelineContent position="right" sx={{ py: '12px', px: 2 }}>
                     <SwipeableTextMobileStepper swipeData={sowingData} />
                 </TimelineContent>
             </TimelineItem>

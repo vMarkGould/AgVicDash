@@ -2,8 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/styles';
-import { AppBar, Tabs, Tab, Typography, Box, Card } from '@material-ui/core';
-import MainCard from 'ui-component/cards/MainCard';
+import { AppBar, Tabs, Tab, Box, Card } from '@material-ui/core';
 import SoilMoistureRoi from './soil-moisture-roi';
 import CustomizedTimeline from './soil-prob-decisions';
 
