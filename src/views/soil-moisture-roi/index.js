@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/styles';
 import { AppBar, Tabs, Tab, Box, Card } from '@material-ui/core';
 import SoilMoistureRoi from './soil-moisture-roi';
-import CustomizedTimeline from './soil-prob-decisions';
+import HorizontalStepper from './soil-prob-decisions-steper';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -66,7 +66,7 @@ export default function FullWidthTabs() {
                     <SoilMoistureRoi />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    <CustomizedTimeline />
+                    <HorizontalStepper />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three

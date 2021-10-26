@@ -25,13 +25,14 @@ function SwipeableTextMobileStepper({ swipeData }) {
     };
 
     return (
-        <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, maxWidth: 800 }}>
             <Paper
                 square
                 elevation={0}
                 sx={{
                     display: 'flex',
                     alignItems: 'center',
+                    maxWidth: 800,
                     height: 25,
                     pl: 2,
                     bgcolor: theme.palette.primary.main
@@ -53,8 +54,8 @@ function SwipeableTextMobileStepper({ swipeData }) {
                                 sx={{
                                     height: 100,
                                     display: 'block',
-                                    maxWidth: 400,
                                     overflow: 'hidden',
+                                    maxWidth: 800,
                                     width: '100%',
                                     p: 2
                                 }}
