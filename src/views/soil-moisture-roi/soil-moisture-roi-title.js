@@ -148,7 +148,8 @@ const SoilMoistureRoiTitle = ({ isLoading, isChecked, setIsChecked }) => {
 
 SoilMoistureRoiTitle.propTypes = {
     isLoading: PropTypes.bool,
-    isChecked: PropTypes.bool
+    isChecked: PropTypes.bool,
+    setIsChecked: PropTypes.func
 };
 
 export default SoilMoistureRoiTitle;

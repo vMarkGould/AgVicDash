@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@material-ui/styles';
-import { AppBar, Tabs, Tab, Typography, Box, Card } from '@material-ui/core';
-import MainCard from 'ui-component/cards/MainCard';
+import { AppBar, Tabs, Tab, Box, Card } from '@material-ui/core';
 import SoilMoistureRoi from './soil-moisture-roi';
+import HorizontalStepper from './soil-prob-decisions-steper';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -17,11 +17,7 @@ function TabPanel(props) {
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
         >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
         </div>
     );
 }
@@ -58,10 +54,10 @@ export default function FullWidthTabs() {
                     indicatorColor="secondary"
                     textColor="inherit"
                     variant="fullWidth"
-                    aria-label="full width tabs example"
+                    aria-label="full width tabs"
                 >
                     <Tab label="Soil Moisture ROI Calculator" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
+                    <Tab label="Soil Probe Decisions" {...a11yProps(1)} />
                     <Tab label="Item Three" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
@@ -70,7 +66,7 @@ export default function FullWidthTabs() {
                     <SoilMoistureRoi />
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>
-                    Item Two
+                    <HorizontalStepper />
                 </TabPanel>
                 <TabPanel value={value} index={2} dir={theme.direction}>
                     Item Three

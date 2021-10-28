@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Slider style
-const useSliderStyles = makeStyles((theme) => ({
+/* const useSliderStyles = makeStyles((theme) => ({
     thumb: {
         backgroundColor: theme.palette.secondary.main
     },
@@ -75,7 +75,7 @@ const useSliderStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.main,
         background: theme.palette.secondary.main
     }
-}));
+})); */
 function valuetext(value) {
     return `${value}`;
 }
@@ -83,7 +83,7 @@ function valuetext(value) {
 
 const SliderCard = ({ isLoading, setSlidervalue, sliderValue, unit, label, step, min, max }) => {
     const classes = useStyles();
-    const sliderClass = useSliderStyles();
+    // const sliderClass = useSliderStyles();
     // const [slidervalue, setsliderValue] = useState(1000);
     // console.log(sliderClass);
     const onChange = (e, value) => {
