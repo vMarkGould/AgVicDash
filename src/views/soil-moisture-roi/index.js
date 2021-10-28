@@ -54,7 +54,7 @@ export default function FullWidthTabs() {
                     indicatorColor="secondary"
                     textColor="inherit"
                     variant="fullWidth"
-                    aria-label="full width tabs example"
+                    aria-label="full width tabs"
                 >
                     <Tab label="Soil Moisture ROI Calculator" {...a11yProps(0)} />
                     <Tab label="Soil Probe Decisions" {...a11yProps(1)} />

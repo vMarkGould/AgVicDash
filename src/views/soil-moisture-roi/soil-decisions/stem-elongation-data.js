@@ -1,15 +1,15 @@
 const stemElongationData = [
     {
-        label: 'High Moisture',
+        label: 'High Soil Moisture',
         description:
             'High confidence. Apply appriopiate inputs to yield potentials and preventative pest and disease strategies. (N, fungicides and pesticides).'
     },
     {
-        label: 'Moderate Moisture',
+        label: 'Moderate Soil Moisture',
         description: 'Moderate confidence. As per original paddock plan.'
     },
     {
-        label: 'Low Moisture',
+        label: 'Low Soil Moisture',
         description: 'Low confidence. No Nitrogen. No forward selling. Consider grazing and hay production'
     }
 ];
