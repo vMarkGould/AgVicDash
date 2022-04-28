@@ -74,6 +74,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
     // const [i, seti] = useState(0);
     // console.log(years);
     const seperatorOn = true;
+    //  $7756 is the cost of 2 soil probe per 500 hectares
     const cost = -Math.round(Math.abs((propertySize / 500) * 7756));
     const ongoingCost = -Math.round(Math.abs((propertySize / 500) * 172));
     const ureaApplied = 65;
@@ -103,12 +104,13 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
             switch (year.value) {
                 case 'wet':
                     if (index === 0) {
-                        netArr[index] = 0;
+                        netArr[index] = totalNetGain;
                         newArr[index] = Math.round(cost + totalNetGain);
-                        npvArr[index] = Math.round(cost);
+                        npvArr[index] = Math.round(cost + totalNetGain);
                     } else {
                         newArr[index] = Math.round(newArr[index - 1] + ongoingCost + totalNetGain);
                         netArr[index] = Math.round(ongoingCost + totalNetGain);
+                        console.log(netArr);
                         const npvGain = GetNPV(discountRate, 0, netArr);
                         npvArr[index] = Math.round(cost + npvGain);
                     }
