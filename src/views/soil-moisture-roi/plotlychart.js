@@ -360,16 +360,12 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                             <Grid container alignItems="center" justifyContent="space-between">
                                 <Grid item>
                                     <Typography component="div" variant="h3" sx={{ color: theme.palette.secondary.dark }}>
-                                        Ten Year Return on Investment
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography component="div" variant="h3" sx={{ color: theme.palette.grey[800] }}>
+                                        Ten Year Return on Investment =
                                         <NumberFormat
                                             value={yValuesLine[9]}
                                             displayType="text"
                                             thousandSeparator={seperatorOn}
-                                            prefix="$"
+                                            prefix=" $"
                                         />
                                     </Typography>
                                 </Grid>
@@ -377,7 +373,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                         </Grid>
                         <Grid item xs={12}>
                             <Typography component="div" variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
-                                By Spreading additional urea in wet years over
+                                The calculations are based on additional urea in wet years being spread accross
                                 <b>
                                     <NumberFormat
                                         value={areaValue}
@@ -388,7 +384,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                         allowNegative={!seperatorOn}
                                     />
                                 </b>
-                                at
+                                of the property at cost of
                                 <b>
                                     <NumberFormat
                                         value={ureaValue}
@@ -413,7 +409,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                 per tonne.
                             </Typography>
                             <Typography component="div" variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
-                                Initial costs for the soil probes and weather stations is
+                                Initial costs for the soil probes and weather stations are calculated at
                                 <b>
                                     <NumberFormat
                                         value={cost}
@@ -424,7 +420,7 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                         allowNegative={!seperatorOn}
                                     />
                                 </b>
-                                and the ongoing costs per year for the technology is
+                                and the ongoing costs per year for the technology at
                                 <b>
                                     <NumberFormat
                                         value={ongoingCost}
@@ -435,6 +431,10 @@ const PlotlyChart = ({ isLoading, areaValue, years, propertySize, grainValue, ur
                                         allowNegative={!seperatorOn}
                                     />
                                 </b>
+                            </Typography>
+                            <Typography component="div" variant="subtitle1" sx={{ color: theme.palette.grey[500] }}>
+                                This model assumes that in Wet years where additional Urea is spread, yields will increase by <b>0.5 </b>
+                                tonnes per hectare.
                             </Typography>
                         </Grid>
                         {/* <Grid item>

@@ -152,7 +152,7 @@ const SoilMoistureRoi = () => {
                                         label="Urea Price"
                                         step={10}
                                         min={100}
-                                        max={800}
+                                        max={2000}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12} xl={11}>
